@@ -26,4 +26,5 @@ plugins {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include("vulpecula-tmp")
+include(":vulpecula-entry-api-v1-jackson")
+include(":vulpecula-movie-api-v1-kmp")
