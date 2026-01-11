@@ -2,7 +2,6 @@ package com.funkycorgi.vulpecula.entry.stubs
 
 import com.funkycorgi.vulpecula.entry.common.models.Entry
 import com.funkycorgi.vulpecula.entry.common.models.EntryId
-import com.funkycorgi.vulpecula.entry.common.models.Comment
 import com.funkycorgi.vulpecula.entry.stubs.EntryStubObjects.*
 
 object EntryStub {
@@ -41,7 +40,7 @@ object EntryStub {
         filter: String
     ) = base.copy(
         id = EntryId(id),
-        comment = Comment("$filter $id")
+        comment = "$filter $id"
     )
 
 }
