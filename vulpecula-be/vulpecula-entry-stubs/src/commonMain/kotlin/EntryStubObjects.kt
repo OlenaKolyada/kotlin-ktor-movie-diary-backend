@@ -9,8 +9,8 @@ object EntryStubObjects {
             userId = UserId("user:12345"),
             movieId = MovieId("movie:tt0111161"),
             viewingDate = ViewingDate("2025-10-15"),
-            rating = Rating(9),
-            comment = Comment("Потрясающий фильм о надежде"),
+            rating = 9,
+            comment = "Потрясающий фильм о надежде",
             lock = EntryLock("123"),
             permissionsClient = mutableSetOf(
                 EntryUserPermission.READ,
@@ -36,7 +36,7 @@ object EntryStubObjects {
 
     val ENTRY_BAD_RATING: Entry
         get() = Entry(
-            rating = Rating(-1)
+            rating = -1
         )
 
     val ENTRY_BAD_VIEWING_DATE: Entry
@@ -46,7 +46,7 @@ object EntryStubObjects {
 
     val ENTRY_BAD_COMMENT: Entry
         get() = Entry(
-            comment = Comment("0")
+            comment = "0"
         )
 
     val ENTRY_CANNOT_DELETE: Entry
