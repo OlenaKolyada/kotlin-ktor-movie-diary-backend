@@ -9,7 +9,6 @@
 | id | Уникальный идентификатор записи | "446655440000" |
 | userId | Идентификатор пользователя (владельца записи) | "user:12345" |
 | movieId | Идентификатор фильма из базы данных | "movie:tt0111161" |
-| movieTitle | Название фильма | "The Shawshank Redemption" |
 | viewingDate | Дата просмотра | "2025-10-15" |
 | rating | Оценка фильма (1-10) | 9 |
 | comment | Комментарий пользователя | "Потрясающий фильм о надежде" |
@@ -18,17 +17,17 @@
 
 ### Movie (Фильм)
 
-| Поле | Бизнес-описание | Пример значения |
-|------|-----------------|-----------------|
-| id | Уникальный идентификатор фильма | "movie:tt0111161" |
-| title | Название фильма | "The Shawshank Redemption" |
-| releaseYear | Год выпуска | 1994 |
-| director | Режиссер | "Frank Darabont" |
-| cast | Главные актеры | ["Tim Robbins", "Morgan Freeman"] |
-| genre | Жанры | ["Drama", "Crime"] |
-| description | Краткое описание | "A banker is wrongfully convicted..." |
-| posterUrl | URL постера фильма | "https://image.tmdb.org/..." |
-| tmdbId | ID фильма в TMDb | "278" |
+| Поле        | Бизнес-описание | Пример значения                       |
+|-------------|-----------------|---------------------------------------|
+| id          | Уникальный идентификатор фильма | "movie:tt0111161"                     |
+| title       | Название фильма | "The Shawshank Redemption"            |
+| releaseYear | Год выпуска | 1994                                  |
+| director    | Режиссер | ["Frank Darabont"]                    |
+| cast        | Главные актеры | ["Tim Robbins", "Morgan Freeman"]     |
+| genre       | Жанры | ["Drama", "Crime"]                    |
+| synopsis    | Краткое описание | "A banker is wrongfully convicted..." |
+| posterUrl   | URL постера фильма | "https://image.tmdb.org/..."          |
+| tmdbId      | ID фильма в TMDb | "278"                                 |
 
 ## 2. Бизнес-функции (методы)
 

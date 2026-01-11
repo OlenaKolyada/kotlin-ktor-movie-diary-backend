@@ -9,7 +9,6 @@
 | id | Unique entry identifier | "446655440000" |
 | userId | User identifier (entry owner) | "user:12345" |
 | movieId | Movie identifier from database | "movie:tt0111161" |
-| movieTitle | Movie title | "The Shawshank Redemption" |
 | viewingDate | Viewing date | "2025-10-15" |
 | rating | Movie rating (1-10) | 9 |
 | comment | User comment | "Amazing film about hope" |
@@ -18,17 +17,17 @@
 
 ### Movie
 
-| Field       | Business Description    | Example Value                         |
-|-------------|-------------------------|---------------------------------------|
-| id          | Unique movie identifier | "movie:tt0111161"                     |
-| title       | Movie title             | "The Shawshank Redemption"            |
-| releaseYear | Release year            | 1994                                  |
-| director    | Director                | "Frank Darabont"                      |
-| cast        | Actors                  | ["Tim Robbins", "Morgan Freeman"]     |
-| genre       | Genres                  | ["Drama", "Crime"]                    |
-| description | Description             | "A banker is wrongfully convicted..." |
-| posterUrl   | Movie poster URL        | "https://image.tmdb.org/..."          |
-| tmdbId      | TMDb movie ID           | "278"                                 |
+| Field       | Business Description    | Example Value                        |
+|-------------|-------------------------|--------------------------------------|
+| id          | Unique movie identifier | "movie:tt0111161"                    |
+| title       | Movie title             | "The Shawshank Redemption"           |
+| releaseYear | Release year            | 1994                                 |
+| director    | Director                | ["Frank Darabont"]                   |
+| cast        | Actors                  | ["Tim Robbins", "Morgan Freeman"]    |
+| genre       | Genres                  | ["Drama", "Crime"]                   |
+| synopsis    | Description             | "A banker is wrongfully convicted..." |
+| posterUrl   | Movie poster URL        | "https://image.tmdb.org/..."         |
+| tmdbId      | TMDb movie ID           | "278"                                |
 
 ## 2. Business Functions (Methods)
 
