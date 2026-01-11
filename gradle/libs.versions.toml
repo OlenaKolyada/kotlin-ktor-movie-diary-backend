@@ -10,7 +10,9 @@ openapi-generator = "7.12.0"
 jackson = "2.18.3"
 
 # BASE
-jvm-compiler = "17"
+#jvm-compiler = "17"
+#jvm-language = "21"
+jvm-compiler = "21"
 jvm-language = "21"
 
 [libraries]

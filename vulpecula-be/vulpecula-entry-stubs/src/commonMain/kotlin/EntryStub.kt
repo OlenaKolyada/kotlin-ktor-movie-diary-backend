@@ -2,7 +2,7 @@ package com.funkycorgi.vulpecula.entry.stubs
 
 import com.funkycorgi.vulpecula.entry.common.models.Entry
 import com.funkycorgi.vulpecula.entry.common.models.EntryId
-import com.funkycorgi.vulpecula.entry.stubs.EntryStubObjects.*
+import com.funkycorgi.vulpecula.entry.stubs.EntryStubObjects.ENTRY_SUCCESS
 
 object EntryStub {
 

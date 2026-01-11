@@ -14,7 +14,7 @@ sourceSets {
  */
 openApiGenerate {
     val openapiGroup = "${rootProject.group}.entry.api.v1"
-    generatorName.set("kotlin") // Это и есть активный генератор
+    generatorName.set("kotlin")
     packageName.set(openapiGroup)
     apiPackage.set("$openapiGroup.api")
     modelPackage.set("$openapiGroup.models")
@@ -56,3 +56,4 @@ tasks {
         dependsOn(openApiGenerate)
     }
 }
+

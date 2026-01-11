@@ -338,6 +338,7 @@ components:
       type: string
       description: User permissions for diary entry operations
       enum:
+        - create
         - read
         - update
         - delete

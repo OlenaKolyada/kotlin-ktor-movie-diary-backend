@@ -1,5 +1,9 @@
 package com.funkycorgi.vulpecula.entry.common.models
 
+import kotlinx.datetime.Instant
+import com.funkycorgi.vulpecula.entry.common.NONE
+
+
 data class Entry(
     var id: EntryId = EntryId.NONE,
     var userId: UserId = UserId.NONE,
@@ -9,6 +13,8 @@ data class Entry(
     var comment: String = "",
     var lock: EntryLock = EntryLock.NONE,
     val userPermissions: MutableSet<EntryUserPermission> = mutableSetOf(),
+    var createdAt: Instant = Instant.NONE,
+    var updatedAt: Instant = Instant.NONE,
 ) {
     fun isEmpty() = this == NONE
 

@@ -1,0 +1,125 @@
+package com.funkycorgi.vulpecula.entry.mappers.v1
+
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntryCreateResponse
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntryDeleteResponse
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntryReadResponse
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntryResponseObject
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntrySearchResponse
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntryUpdateResponse
+import com.funkycorgi.vulpecula.entry.api.v1.models.EntryPermissions
+import com.funkycorgi.vulpecula.entry.api.v1.models.Error
+import com.funkycorgi.vulpecula.entry.api.v1.models.IResponse
+import com.funkycorgi.vulpecula.entry.api.v1.models.ResponseResult
+import com.funkycorgi.vulpecula.entry.common.EntryContext
+import com.funkycorgi.vulpecula.entry.common.exceptions.UnknownEntryCommand
+import com.funkycorgi.vulpecula.entry.common.models.Entry
+import com.funkycorgi.vulpecula.entry.common.models.EntryId
+import com.funkycorgi.vulpecula.entry.common.models.EntryUserPermission
+import com.funkycorgi.vulpecula.entry.common.models.EntryCommand
+import com.funkycorgi.vulpecula.entry.common.models.EntryError
+import com.funkycorgi.vulpecula.entry.common.models.EntryState
+import com.funkycorgi.vulpecula.entry.common.models.UserId
+import com.funkycorgi.vulpecula.entry.common.models.EntryLock
+import com.funkycorgi.vulpecula.entry.common.models.MovieId
+import com.funkycorgi.vulpecula.entry.common.models.ViewingDate
+import kotlinx.datetime.Instant
+import com.funkycorgi.vulpecula.entry.common.NONE
+
+fun EntryContext.toTransportEntry(): IResponse = when (val cmd = command) {
+    EntryCommand.CREATE -> toTransportCreate()
+    EntryCommand.READ -> toTransportRead()
+    EntryCommand.UPDATE -> toTransportUpdate()
+    EntryCommand.DELETE -> toTransportDelete()
+    EntryCommand.SEARCH -> toTransportSearch()
+    EntryCommand.NONE -> throw UnknownEntryCommand(cmd)
+}
+
+fun EntryContext.toTransportCreate() = EntryCreateResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+    entry = entryResponse.toTransportEntry(),
+)
+
+fun EntryContext.toTransportRead() = EntryReadResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+    entry = entryResponse.toTransportEntry()
+)
+
+fun EntryContext.toTransportUpdate() = EntryUpdateResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+    entry = entryResponse.toTransportEntry()
+)
+
+fun EntryContext.toTransportDelete() = EntryDeleteResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+    entry = entryResponse.toTransportEntry()
+)
+
+fun EntryContext.toTransportSearch() = EntrySearchResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+    propertyEntries = entriesResponse.toTransportEntry()
+)
+
+fun List<Entry>.toTransportEntry(): List<EntryResponseObject>? = this
+    .map { it.toTransportEntry() }
+    .toList()
+    .takeIf { it.isNotEmpty() }
+
+fun Entry.toTransportEntry(): EntryResponseObject = EntryResponseObject(
+    id = id.toTransportEntry(),
+    userId = userId.takeIf { it != UserId.NONE }?.asString(),
+    movieId = movieId.takeIf { it != MovieId.NONE }?.asString(),
+    viewingDate = viewingDate.toTransportEntry(),
+    rating = rating.toTransportEntry(),
+    comment = comment.takeIf { it.isNotBlank() },
+    permissions = userPermissions.toTransportEntry(),
+    lock = lock.takeIf { it != EntryLock.NONE }?.asString(),
+    createdAt = createdAt.toTransportEntry(),
+    updatedAt = updatedAt.toTransportEntry(),
+)
+
+internal fun EntryId.toTransportEntry() = takeIf { it != EntryId.NONE }?.asString()
+
+private fun Set<EntryUserPermission>.toTransportEntry(): Set<EntryPermissions>? = this
+    .map { it.toTransportEntry() }
+    .toSet()
+    .takeIf { it.isNotEmpty() }
+
+private fun EntryUserPermission.toTransportEntry() = when (this) {
+    EntryUserPermission.CREATE -> EntryPermissions.CREATE
+    EntryUserPermission.READ -> EntryPermissions.READ
+    EntryUserPermission.UPDATE -> EntryPermissions.UPDATE
+    EntryUserPermission.DELETE -> EntryPermissions.DELETE
+}
+
+private fun List<EntryError>.toTransportErrors(): List<Error>? = this
+    .map { it.toTransportEntry() }
+    .toList()
+    .takeIf { it.isNotEmpty() }
+
+private fun EntryError.toTransportEntry() = Error(
+    code = code.takeIf { it.isNotBlank() },
+    group = group.takeIf { it.isNotBlank() },
+    field = field.takeIf { it.isNotBlank() },
+    message = message.takeIf { it.isNotBlank() },
+)
+
+private fun EntryState.toResult(): ResponseResult? = when (this) {
+    EntryState.RUNNING -> ResponseResult.SUCCESS
+    EntryState.FAILING -> ResponseResult.ERROR
+    EntryState.FINISHING -> ResponseResult.SUCCESS
+    EntryState.NONE -> null
+}
+
+private fun ViewingDate.toTransportEntry(): String? =
+    takeIf { it != ViewingDate.NONE }?.asLocalDate()?.toString()
+
+private fun Int.toTransportEntry(): Int? =
+    takeIf { it > 0 }
+
+private fun Instant.toTransportEntry(): String? =
+    takeIf { it != Instant.NONE }?.toString()

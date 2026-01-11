@@ -36,4 +36,27 @@ tasks {
             }
         }
     }
+
+    subprojects {
+        group = rootProject.group
+        version = rootProject.version
+
+        // Только для проектов с Java-плагином
+        afterEvaluate {
+            if (plugins.hasPlugin("java") || plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+                the<JavaPluginExtension>().apply {
+                    toolchain {
+                        languageVersion.set(JavaLanguageVersion.of(23))
+                    }
+                }
+
+                tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                    kotlinOptions {
+                        jvmTarget = "23"
+                    }
+                }
+            }
+        }
+    }
+
 }
