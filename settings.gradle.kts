@@ -10,5 +10,4 @@ plugins {
 }
 rootProject.name = "vulpecula"
 
-includeBuild("lessons")
 includeBuild("vulpecula-be")
