@@ -139,6 +139,8 @@ components:
       properties:
         searchString:
           type: string
+          minLength: 1
+          maxLength: 200
           description: Search string
 
     MovieSearchRequest:
@@ -159,22 +161,39 @@ components:
               $ref: '#/components/schemas/MovieId'
             title:
               type: string
+              maxLength: 500
               description: Movie title
             releaseYear:
               type: integer
-              minimum: 1888
               maximum: 2100
               description: Movie release year
+            director:
+              type: array
+              items:
+                type: string
+                maxLength: 200
+              description: Movie directors
+            cast:
+              type: array
+              items:
+                type: string
+                maxLength: 200
+              description: Movie cast
             genre:
               type: array
               items:
                 type: string
-              description: Movie genre
+                maxLength: 200
+              description: Movie genres
             synopsis:
               type: string
+              maxLength: 2000
               description: Movie synopsis
             posterUrl:
               type: string
+              format: uri
+              maxLength: 2048
+              pattern: '^https?://.+'
               description: Movie poster URL
             tmdbId:
               type: integer
@@ -239,8 +258,11 @@ components:
         - badId
         - badTitle
         - badReleaseYear
+        - badDirector
+        - badCast
         - badGenre
         - badSynopsis
         - badPosterUrl
         - badTmdbId
         - badSearchString
+        - dbError

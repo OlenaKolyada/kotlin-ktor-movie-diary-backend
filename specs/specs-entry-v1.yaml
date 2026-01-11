@@ -288,6 +288,7 @@ components:
       properties:
         searchString:
           type: string
+          maxLength: 200
           description: Search string
         movieId:
           $ref: '#/components/schemas/MovieId'
