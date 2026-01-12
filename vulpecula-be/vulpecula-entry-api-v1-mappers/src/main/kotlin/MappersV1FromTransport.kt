@@ -36,9 +36,80 @@ fun EntryContext.fromTransport(request: IRequest) = when (request) {
     else -> throw UnknownRequestClass(request.javaClass)
 }
 
-private fun String?.toEntryId() = this?.let { EntryId(it) } ?: EntryId.NONE
-private fun String?.toEntryWithId() = Entry(id = this.toEntryId())
-private fun String?.toEntryLock() = this?.let { EntryLock(it) } ?: EntryLock.NONE
+fun EntryContext.fromTransport(request: EntryCreateRequest) {
+    command = EntryCommand.CREATE
+    entryRequest = request.entry?.toInternal() ?: Entry()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+fun EntryContext.fromTransport(request: EntryReadRequest) {
+    command = EntryCommand.READ
+    entryRequest = request.entry.toInternal()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+fun EntryContext.fromTransport(request: EntryUpdateRequest) {
+    command = EntryCommand.UPDATE
+    entryRequest = request.entry?.toInternal() ?: Entry()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+fun EntryContext.fromTransport(request: EntryDeleteRequest) {
+    command = EntryCommand.DELETE
+    entryRequest = request.entry.toInternal()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+fun EntryContext.fromTransport(request: EntrySearchRequest) {
+    command = EntryCommand.SEARCH
+    entryFilterRequest = request.entryFilter.toInternal()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+private fun EntryCreateObject.toInternal(): Entry = Entry(
+    movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
+    viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
+    rating = this.rating ?: -1,
+    comment = this.comment ?: "",
+)
+
+private fun EntryReadObject?.toInternal(): Entry =
+    if (this != null) {
+        Entry(id = id.toEntryId())
+    } else {
+        Entry()
+}
+
+private fun EntryUpdateObject.toInternal(): Entry = Entry(
+    id = this.id.toEntryId(),
+    movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
+    viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
+    rating = this.rating ?: -1,
+    comment = this.comment ?: "",
+    lock = lock.toEntryLock(),
+)
+
+private fun EntryDeleteObject?.toInternal(): Entry =
+    if (this != null) {
+        Entry(
+            id = id.toEntryId(),
+            lock = lock.toEntryLock(),
+        )
+    } else {
+        Entry()
+}
+
+private fun EntrySearchFilter?.toInternal(): EntryFilter = EntryFilter(
+    searchString = this?.searchString ?: "",
+    movieId = this?.movieId?.toMovieId() ?: MovieId.NONE,
+    viewingDateFrom = this?.viewingDateFrom?.toViewingDate() ?: ViewingDate.NONE,
+    viewingDateTo = this?.viewingDateTo?.toViewingDate() ?: ViewingDate.NONE,
+)
 
 private fun EntryDebug?.transportToWorkMode(): EntryWorkMode = when (this?.mode) {
     EntryRequestDebugMode.PROD -> EntryWorkMode.PROD
@@ -61,79 +132,16 @@ private fun EntryDebug?.transportToStubCase(): EntryStubs = when (this?.stub) {
     null -> EntryStubs.NONE
 }
 
-fun EntryContext.fromTransport(request: EntryReadRequest) {
-    command = EntryCommand.READ
-    entryRequest = request.entry.toInternal()
-    workMode = request.debug.transportToWorkMode()
-    stubCase = request.debug.transportToStubCase()
-}
+private fun String?.toEntryId() =
+    this?.let { EntryId(it) } ?: EntryId.NONE
 
-private fun EntryReadObject?.toInternal(): Entry = if (this != null) {
-    Entry(id = id.toEntryId())
-} else {
-    Entry()
-}
+private fun String.toMovieId() =
+    MovieId(this)
 
-fun EntryContext.fromTransport(request: EntryCreateRequest) {
-    command = EntryCommand.CREATE
-    entryRequest = request.entry?.toInternal() ?: Entry()
-    workMode = request.debug.transportToWorkMode()
-    stubCase = request.debug.transportToStubCase()
-}
+private fun String.toViewingDate() =
+    ViewingDate(LocalDate.parse(this))
 
-fun EntryContext.fromTransport(request: EntryUpdateRequest) {
-    command = EntryCommand.UPDATE
-    entryRequest = request.entry?.toInternal() ?: Entry()
-    workMode = request.debug.transportToWorkMode()
-    stubCase = request.debug.transportToStubCase()
-}
+private fun String?.toEntryLock() =
+    this?.let { EntryLock(it) } ?: EntryLock.NONE
 
-fun EntryContext.fromTransport(request: EntryDeleteRequest) {
-    command = EntryCommand.DELETE
-    entryRequest = request.entry.toInternal()
-    workMode = request.debug.transportToWorkMode()
-    stubCase = request.debug.transportToStubCase()
-}
-
-private fun EntryDeleteObject?.toInternal(): Entry = if (this != null) {
-    Entry(
-        id = id.toEntryId(),
-        lock = lock.toEntryLock(),
-    )
-} else {
-    Entry()
-}
-
-fun EntryContext.fromTransport(request: EntrySearchRequest) {
-    command = EntryCommand.SEARCH
-    entryFilterRequest = request.entryFilter.toInternal()
-    workMode = request.debug.transportToWorkMode()
-    stubCase = request.debug.transportToStubCase()
-}
-
-private fun EntrySearchFilter?.toInternal(): EntryFilter = EntryFilter(
-    searchString = this?.searchString ?: "",
-    movieId = this?.movieId?.toMovieId() ?: MovieId.NONE,
-    viewingDateFrom = this?.viewingDateFrom?.toViewingDate() ?: ViewingDate.NONE,
-    viewingDateTo = this?.viewingDateTo?.toViewingDate() ?: ViewingDate.NONE,
-)
-
-private fun EntryCreateObject.toInternal(): Entry = Entry(
-    movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
-    viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
-    rating = this.rating ?: -1,
-    comment = this.comment ?: "",
-)
-
-private fun EntryUpdateObject.toInternal(): Entry = Entry(
-    id = this.id.toEntryId(),
-    movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
-    viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
-    rating = this.rating ?: -1,
-    comment = this.comment ?: "",
-    lock = lock.toEntryLock(),
-)
-
-private fun String.toViewingDate() = ViewingDate(LocalDate.parse(this))
-
-private fun String.toMovieId() = MovieId(this)
+//private fun String?.toEntryWithId() = Entry(id = this.toEntryId())

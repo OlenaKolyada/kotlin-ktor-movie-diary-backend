@@ -13,7 +13,6 @@ import com.funkycorgi.vulpecula.entry.api.v1.models.ResponseResult
 import com.funkycorgi.vulpecula.entry.common.EntryContext
 import com.funkycorgi.vulpecula.entry.common.exceptions.UnknownEntryCommand
 import com.funkycorgi.vulpecula.entry.common.models.Entry
-import com.funkycorgi.vulpecula.entry.common.models.EntryId
 import com.funkycorgi.vulpecula.entry.common.models.EntryUserPermission
 import com.funkycorgi.vulpecula.entry.common.models.EntryCommand
 import com.funkycorgi.vulpecula.entry.common.models.EntryError
@@ -21,9 +20,6 @@ import com.funkycorgi.vulpecula.entry.common.models.EntryState
 import com.funkycorgi.vulpecula.entry.common.models.UserId
 import com.funkycorgi.vulpecula.entry.common.models.EntryLock
 import com.funkycorgi.vulpecula.entry.common.models.MovieId
-import com.funkycorgi.vulpecula.entry.common.models.ViewingDate
-import kotlinx.datetime.Instant
-import com.funkycorgi.vulpecula.entry.common.NONE
 
 fun EntryContext.toTransportEntry(): IResponse = when (val cmd = command) {
     EntryCommand.CREATE -> toTransportCreate()
@@ -64,11 +60,6 @@ fun EntryContext.toTransportSearch() = EntrySearchResponse(
     propertyEntries = entriesResponse.toTransportEntry()
 )
 
-fun List<Entry>.toTransportEntry(): List<EntryResponseObject>? = this
-    .map { it.toTransportEntry() }
-    .toList()
-    .takeIf { it.isNotEmpty() }
-
 fun Entry.toTransportEntry(): EntryResponseObject = EntryResponseObject(
     id = id.toTransportEntry(),
     userId = userId.takeIf { it != UserId.NONE }?.asString(),
@@ -82,18 +73,11 @@ fun Entry.toTransportEntry(): EntryResponseObject = EntryResponseObject(
     updatedAt = updatedAt.toTransportEntry(),
 )
 
-internal fun EntryId.toTransportEntry() = takeIf { it != EntryId.NONE }?.asString()
-
-private fun Set<EntryUserPermission>.toTransportEntry(): Set<EntryPermissions>? = this
-    .map { it.toTransportEntry() }
-    .toSet()
-    .takeIf { it.isNotEmpty() }
-
-private fun EntryUserPermission.toTransportEntry() = when (this) {
-    EntryUserPermission.CREATE -> EntryPermissions.CREATE
-    EntryUserPermission.READ -> EntryPermissions.READ
-    EntryUserPermission.UPDATE -> EntryPermissions.UPDATE
-    EntryUserPermission.DELETE -> EntryPermissions.DELETE
+private fun EntryState.toResult(): ResponseResult? = when (this) {
+    EntryState.RUNNING -> ResponseResult.SUCCESS
+    EntryState.FAILING -> ResponseResult.ERROR
+    EntryState.FINISHING -> ResponseResult.SUCCESS
+    EntryState.NONE -> null
 }
 
 private fun List<EntryError>.toTransportErrors(): List<Error>? = this
@@ -108,18 +92,19 @@ private fun EntryError.toTransportEntry() = Error(
     message = message.takeIf { it.isNotBlank() },
 )
 
-private fun EntryState.toResult(): ResponseResult? = when (this) {
-    EntryState.RUNNING -> ResponseResult.SUCCESS
-    EntryState.FAILING -> ResponseResult.ERROR
-    EntryState.FINISHING -> ResponseResult.SUCCESS
-    EntryState.NONE -> null
+private fun Set<EntryUserPermission>.toTransportEntry(): Set<EntryPermissions>? = this
+    .map { it.toTransportEntry() }
+    .toSet()
+    .takeIf { it.isNotEmpty() }
+
+private fun EntryUserPermission.toTransportEntry() = when (this) {
+    EntryUserPermission.CREATE -> EntryPermissions.CREATE
+    EntryUserPermission.READ -> EntryPermissions.READ
+    EntryUserPermission.UPDATE -> EntryPermissions.UPDATE
+    EntryUserPermission.DELETE -> EntryPermissions.DELETE
 }
 
-private fun ViewingDate.toTransportEntry(): String? =
-    takeIf { it != ViewingDate.NONE }?.asLocalDate()?.toString()
-
-private fun Int.toTransportEntry(): Int? =
-    takeIf { it > 0 }
-
-private fun Instant.toTransportEntry(): String? =
-    takeIf { it != Instant.NONE }?.toString()
+fun List<Entry>.toTransportEntry(): List<EntryResponseObject>? = this
+    .map { it.toTransportEntry() }
+    .toList()
+    .takeIf { it.isNotEmpty() }

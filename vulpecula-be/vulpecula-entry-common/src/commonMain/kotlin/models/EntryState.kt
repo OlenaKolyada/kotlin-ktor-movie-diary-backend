@@ -1,6 +1,6 @@
 package com.funkycorgi.vulpecula.entry.common.models
 
-enum class EntryState {
+enum class  EntryState {
     NONE,
     RUNNING,
     FAILING,
