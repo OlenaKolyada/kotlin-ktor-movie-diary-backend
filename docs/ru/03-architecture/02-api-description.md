@@ -17,17 +17,15 @@
 
 ### Movie (Фильм)
 
-| Поле        | Бизнес-описание | Пример значения                       |
-|-------------|-----------------|---------------------------------------|
-| id          | Уникальный идентификатор фильма | "movie:tt0111161"                     |
-| title       | Название фильма | "The Shawshank Redemption"            |
-| releaseYear | Год выпуска | 1994                                  |
-| director    | Режиссер | ["Frank Darabont"]                    |
-| cast        | Главные актеры | ["Tim Robbins", "Morgan Freeman"]     |
-| genre       | Жанры | ["Drama", "Crime"]                    |
+| Поле        | Бизнес-описание | Пример значения |
+|-------------|-----------------|-----------------|
+| id          | Уникальный идентификатор фильма | "movie:tt0111161" |
+| title       | Название фильма | "The Shawshank Redemption" |
+| releaseYear | Год выпуска | 1994 |
+| genre       | Жанры | ["Drama", "Crime"] |
 | synopsis    | Краткое описание | "A banker is wrongfully convicted..." |
-| posterUrl   | URL постера фильма | "https://image.tmdb.org/..."          |
-| tmdbId      | ID фильма в TMDb | "278"                                 |
+| posterUrl   | URL постера фильма | "https://image.tmdb.org/..." |
+| tmdbId      | ID фильма в TMDb | "278" |
 
 ## 2. Бизнес-функции (методы)
 

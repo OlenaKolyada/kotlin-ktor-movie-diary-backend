@@ -17,17 +17,15 @@
 
 ### Movie
 
-| Field       | Business Description    | Example Value                        |
-|-------------|-------------------------|--------------------------------------|
-| id          | Unique movie identifier | "movie:tt0111161"                    |
-| title       | Movie title             | "The Shawshank Redemption"           |
-| releaseYear | Release year            | 1994                                 |
-| director    | Director                | ["Frank Darabont"]                   |
-| cast        | Actors                  | ["Tim Robbins", "Morgan Freeman"]    |
-| genre       | Genres                  | ["Drama", "Crime"]                   |
-| synopsis    | Description             | "A banker is wrongfully convicted..." |
-| posterUrl   | Movie poster URL        | "https://image.tmdb.org/..."         |
-| tmdbId      | TMDb movie ID           | "278"                                |
+| Field       | Business Description    | Example Value                         |
+|-------------|-------------------------|---------------------------------------|
+| id          | Unique movie identifier | "movie:tt0111161"                     |
+| title       | Movie title             | "The Shawshank Redemption"            |
+| releaseYear | Release year            | 1994                                  | |
+| genre       | Genres                  | ["Drama", "Crime"]                    |
+| synopsis    | Synopsis                | "A banker is wrongfully convicted..." |
+| posterUrl   | Movie poster URL        | "https://image.tmdb.org/..."          |
+| tmdbId      | TMDb movie ID           | "278"                                 |
 
 ## 2. Business Functions (Methods)
 
