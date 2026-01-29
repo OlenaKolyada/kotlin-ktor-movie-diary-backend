@@ -1,15 +1,15 @@
-package com.funkycorgi.vulpecula.entry.mappers.v1
+package com.funkycorgi.vulpecula.entry.mappers
 
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryCreateResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryDeleteResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryReadResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryResponseObject
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntrySearchResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryUpdateResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryPermissions
-import com.funkycorgi.vulpecula.entry.api.v1.models.Error
-import com.funkycorgi.vulpecula.entry.api.v1.models.IResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.ResponseResult
+import com.funkycorgi.vulpecula.entry.api.models.EntryCreateResponse
+import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteResponse
+import com.funkycorgi.vulpecula.entry.api.models.EntryReadResponse
+import com.funkycorgi.vulpecula.entry.api.models.EntryResponseObject
+import com.funkycorgi.vulpecula.entry.api.models.EntrySearchResponse
+import com.funkycorgi.vulpecula.entry.api.models.EntryUpdateResponse
+import com.funkycorgi.vulpecula.entry.api.models.EntryPermissions
+import com.funkycorgi.vulpecula.entry.api.models.Error
+import com.funkycorgi.vulpecula.entry.api.models.IResponse
+import com.funkycorgi.vulpecula.entry.api.models.ResponseResult
 import com.funkycorgi.vulpecula.entry.common.EntryContext
 import com.funkycorgi.vulpecula.entry.common.exceptions.UnknownEntryCommand
 import com.funkycorgi.vulpecula.entry.common.models.Entry

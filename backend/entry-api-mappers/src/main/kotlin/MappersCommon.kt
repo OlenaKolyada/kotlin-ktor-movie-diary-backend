@@ -1,4 +1,4 @@
-package com.funkycorgi.vulpecula.entry.mappers.v1
+package com.funkycorgi.vulpecula.entry.mappers
 
 import com.funkycorgi.vulpecula.entry.common.NONE
 import com.funkycorgi.vulpecula.entry.common.models.EntryId

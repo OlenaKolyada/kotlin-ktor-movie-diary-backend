@@ -1,6 +1,6 @@
-package com.funkycorgi.vulpecula.entry.api.v1
+package com.funkycorgi.vulpecula.entry.api
 
-import com.funkycorgi.vulpecula.entry.api.v1.models.*
+import com.funkycorgi.vulpecula.entry.api.models.*
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals

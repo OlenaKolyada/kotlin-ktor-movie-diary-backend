@@ -13,13 +13,13 @@ sourceSets {
  * Настраиваем генерацию здесь
  */
 openApiGenerate {
-    val openapiGroup = "${rootProject.group}.entry.api.v1"
+    val openapiGroup = "${rootProject.group}.entry.api"
     generatorName.set("kotlin")
     packageName.set(openapiGroup)
     apiPackage.set("$openapiGroup.api")
     modelPackage.set("$openapiGroup.models")
     invokerPackage.set("$openapiGroup.invoker")
-    inputSpec.set(rootProject.ext["spec-entry-v1"] as String) // <-
+    inputSpec.set(rootProject.ext["spec-entry"] as String) // <-
 
     /**
      * Здесь указываем, что нам нужны только модели, все остальное не нужно

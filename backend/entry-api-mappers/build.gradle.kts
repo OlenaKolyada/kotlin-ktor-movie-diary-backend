@@ -7,9 +7,9 @@ version = rootProject.version
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation(projects.vulpeculaEntryApiV1Jackson)
-    implementation(projects.vulpeculaEntryCommon)
+    implementation(projects.entryApi)
+    implementation(projects.entryCommon)
 
     testImplementation(kotlin("test-junit"))
-    testImplementation(projects.vulpeculaEntryStubs)
+    testImplementation(projects.entryStubs)
 }

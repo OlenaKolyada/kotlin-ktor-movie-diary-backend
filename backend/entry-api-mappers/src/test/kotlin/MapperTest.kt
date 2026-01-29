@@ -1,9 +1,9 @@
 import org.junit.Test
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryCreateRequest
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryCreateResponse
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryDebug
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryRequestDebugMode
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryRequestDebugStubs
+import com.funkycorgi.vulpecula.entry.api.models.EntryCreateRequest
+import com.funkycorgi.vulpecula.entry.api.models.EntryCreateResponse
+import com.funkycorgi.vulpecula.entry.api.models.EntryDebug
+import com.funkycorgi.vulpecula.entry.api.models.EntryRequestDebugMode
+import com.funkycorgi.vulpecula.entry.api.models.EntryRequestDebugStubs
 import com.funkycorgi.vulpecula.entry.common.EntryContext
 import com.funkycorgi.vulpecula.entry.common.models.EntryId
 import com.funkycorgi.vulpecula.entry.common.models.EntryLock
@@ -14,9 +14,9 @@ import com.funkycorgi.vulpecula.entry.common.models.EntryState
 import com.funkycorgi.vulpecula.entry.common.models.UserId
 import com.funkycorgi.vulpecula.entry.common.models.EntryWorkMode
 import com.funkycorgi.vulpecula.entry.common.stubs.EntryStubs
-import com.funkycorgi.vulpecula.entry.mappers.v1.fromTransport
-import com.funkycorgi.vulpecula.entry.mappers.v1.toTransportEntry
-import com.funkycorgi.vulpecula.entry.mappers.v1.toTransportCreateEntry
+import com.funkycorgi.vulpecula.entry.mappers.fromTransport
+import com.funkycorgi.vulpecula.entry.mappers.toTransportEntry
+import com.funkycorgi.vulpecula.entry.mappers.toTransportCreateEntry
 import com.funkycorgi.vulpecula.entry.stubs.EntryStub
 import kotlin.test.assertEquals
 

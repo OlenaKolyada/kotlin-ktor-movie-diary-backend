@@ -10,4 +10,4 @@ plugins {
 }
 rootProject.name = "vulpecula"
 
-includeBuild("vulpecula-be")
+includeBuild("backend")

@@ -8,7 +8,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
 
-                implementation(projects.vulpeculaEntryCommon)
+                implementation(projects.entryCommon)
             }
         }
         val commonTest by getting {

@@ -1,9 +1,9 @@
-package com.funkycorgi.vulpecula.entry.api.v1
+package com.funkycorgi.vulpecula.entry.api
 
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
-import com.funkycorgi.vulpecula.entry.api.v1.models.IRequest
-import com.funkycorgi.vulpecula.entry.api.v1.models.IResponse
+import com.funkycorgi.vulpecula.entry.api.models.IRequest
+import com.funkycorgi.vulpecula.entry.api.models.IResponse
 
 val apiEntryV1Mapper = JsonMapper.builder().run {
     enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)

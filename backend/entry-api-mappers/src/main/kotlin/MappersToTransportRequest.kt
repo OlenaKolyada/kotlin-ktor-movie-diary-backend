@@ -1,9 +1,9 @@
-package com.funkycorgi.vulpecula.entry.mappers.v1
+package com.funkycorgi.vulpecula.entry.mappers
 
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryCreateObject
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryDeleteObject
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryReadObject
-import com.funkycorgi.vulpecula.entry.api.v1.models.EntryUpdateObject
+import com.funkycorgi.vulpecula.entry.api.models.EntryCreateObject
+import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteObject
+import com.funkycorgi.vulpecula.entry.api.models.EntryReadObject
+import com.funkycorgi.vulpecula.entry.api.models.EntryUpdateObject
 import com.funkycorgi.vulpecula.entry.common.models.Entry
 
 fun Entry.toTransportCreateEntry() = EntryCreateObject(
