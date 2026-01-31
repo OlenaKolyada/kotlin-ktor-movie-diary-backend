@@ -2,10 +2,14 @@ plugins {
     kotlin("jvm")
 }
 
+kotlin {
+    jvmToolchain(23)
+}
+
 repositories {
     maven {
         name = "LocalRepo"
-        url = uri("${rootProject.projectDir}/../vulpecula-deploy/build/repo")
+        url = uri("${rootProject.projectDir}/../deploy/build/repo")
     }
 }
 
@@ -18,6 +22,7 @@ dependencies {
 
     implementation("com.funkycorgi.vulpecula:entry-api-jvm")
     implementation("com.funkycorgi.vulpecula:entry-api-jvm-mappers")
+    implementation("com.funkycorgi.vulpecula:entry-api-kmp")
     implementation("com.funkycorgi.vulpecula:entry-stubs")
 
     testImplementation(kotlin("test-junit5"))

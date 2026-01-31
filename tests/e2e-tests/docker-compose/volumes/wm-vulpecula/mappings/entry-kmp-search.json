@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/entry/kmp/search",
+    "bodyPatterns": [
+      {"matchesJsonPath": "$.entryFilter[?(@.searchString == 'фильм')]"}
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "search",
+      "result": "success",
+      "entries": [
+        {
+          "id": "111",
+          "userId": "user:12345",
+          "movieId": "movie:tt1375666",
+          "viewingDate": "2025-10-15",
+          "rating": 9,
+          "comment": "Начало - невероятная игра с реальностью"
+        },
+        {
+          "id": "222",
+          "userId": "user:12345",
+          "movieId": "movie:tt1160419",
+          "viewingDate": "2025-10-15",
+          "rating": 9,
+          "comment": "Дюна - эпическая космическая сага"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

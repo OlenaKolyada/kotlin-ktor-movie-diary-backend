@@ -1,25 +1,15 @@
-package scenarios.entry
+package scenarios.entry.jvm
 
 import base.client.Client
-import com.funkycorgi.vulpecula.entry.api.models.EntryCreateRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryCreateResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryDebug
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteObject
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryReadObject
-import com.funkycorgi.vulpecula.entry.api.models.EntryReadRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryReadResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryResponseObject
-import com.funkycorgi.vulpecula.entry.api.models.ResponseResult
+import com.funkycorgi.vulpecula.entry.api.jvm.models.*
 import io.kotest.engine.runBlocking
 import org.junit.jupiter.api.Test
-import scenarios.entry.base.sendAndReceive
-import scenarios.entry.base.someCreateEntry
+import scenarios.entry.jvm.base.sendAndReceive
+import scenarios.entry.jvm.base.someCreateEntry
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-abstract class ScenarioReadEntry(
+abstract class ScenarioReadEntryJvm(
     private val client: Client,
     private val debug: EntryDebug? = null
 ) {
@@ -27,7 +17,7 @@ abstract class ScenarioReadEntry(
     fun read() = runBlocking {
         val obj = someCreateEntry
         val resCreate = client.sendAndReceive(
-            "entry/create", EntryCreateRequest(
+            "create", EntryCreateRequest(
                 requestType = "create",
                 debug = debug,
                 entry = obj,
@@ -46,7 +36,7 @@ abstract class ScenarioReadEntry(
             id = cObj.id,
         )
         val resRead = client.sendAndReceive(
-            "entry/read",
+            "read",
             EntryReadRequest(
                 requestType = "read",
                 debug = debug,
@@ -63,7 +53,7 @@ abstract class ScenarioReadEntry(
         assertEquals(obj.comment, rrObj.comment)
 
         val resDelete = client.sendAndReceive(
-            "entry/delete", EntryDeleteRequest(
+            "delete", EntryDeleteRequest(
                 requestType = "delete",
                 debug = debug,
                 entry = EntryDeleteObject(cObj.id, cObj.lock),

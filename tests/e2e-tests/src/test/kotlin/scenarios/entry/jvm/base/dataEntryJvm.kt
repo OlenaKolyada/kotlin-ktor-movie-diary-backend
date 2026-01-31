@@ -1,4 +1,4 @@
-package scenarios.entry.base
+package scenarios.entry.jvm.base
 
 import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryCreateObject
 

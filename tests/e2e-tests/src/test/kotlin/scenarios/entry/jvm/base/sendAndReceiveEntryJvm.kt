@@ -1,4 +1,4 @@
-package scenarios.entry.base
+package scenarios.entry.jvm.base
 
 import base.client.Client
 import co.touchlab.kermit.Logger
@@ -12,9 +12,9 @@ private val log = Logger
 
 suspend fun Client.sendAndReceive(path: String, request: IRequest): IResponse {
     val requestBody = entryApiJvmRequestSerialize(request)
-    log.i { "Send to entry/$path\n$requestBody" }
+    log.i { "Send to entry/jvm/$path\n$requestBody" }
 
-    val responseBody = sendAndReceive("entry", path, requestBody)
+    val responseBody = sendAndReceive("entry/jvm", path, requestBody)
     log.i { "Received\n$responseBody" }
 
     return entryApiJvmResponseDeserialize(responseBody)

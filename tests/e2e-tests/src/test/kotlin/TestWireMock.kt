@@ -1,13 +1,16 @@
 import base.BaseContainerTest
 import base.client.Client
 import base.client.RestClient
-import com.funkycorgi.vulpecula.entry.api.models.EntryDebug
-import com.funkycorgi.vulpecula.entry.api.models.EntryRequestDebugMode
+import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryDebug as EntryDebugJvm
+import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryRequestDebugMode as EntryRequestDebugModeJvm
+import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryDebug as EntryDebugKmp
+import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryRequestDebugMode as EntryRequestDebugModeKmp
 import docker.WiremockDockerCompose
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import scenarios.entry.ScenariosEntry
+import scenarios.entry.jvm.ScenariosEntryJvm
+import scenarios.entry.kmp.ScenariosEntryKmp
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TestWireMock: BaseContainerTest(WiremockDockerCompose) {
@@ -18,6 +21,13 @@ class TestWireMock: BaseContainerTest(WiremockDockerCompose) {
     }
 
     @Nested
-    internal inner class EntryScenarios: ScenariosEntry(client, EntryDebug(mode = EntryRequestDebugMode.PROD))
+    internal inner class EntryJvmScenario: ScenariosEntryJvm(
+        client, EntryDebugJvm(mode = EntryRequestDebugModeJvm.PROD)
+    )
+
+    @Nested
+    internal inner class EntryKmpScenario: ScenariosEntryKmp(
+        client, EntryDebugKmp(mode = EntryRequestDebugModeKmp.PROD)
+    )
 
 }

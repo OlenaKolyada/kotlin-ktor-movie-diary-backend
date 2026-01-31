@@ -1,25 +1,15 @@
-package scenarios.entry
+package scenarios.entry.jvm
 
 import base.client.Client
-import com.funkycorgi.vulpecula.entry.api.models.EntryCreateRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryCreateResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryDebug
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteObject
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryResponseObject
-import com.funkycorgi.vulpecula.entry.api.models.EntryUpdateObject
-import com.funkycorgi.vulpecula.entry.api.models.EntryUpdateRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryUpdateResponse
-import com.funkycorgi.vulpecula.entry.api.models.ResponseResult
+import com.funkycorgi.vulpecula.entry.api.jvm.models.*
 import io.kotest.engine.runBlocking
 import org.junit.jupiter.api.Test
-import scenarios.entry.base.sendAndReceive
-import scenarios.entry.base.someCreateEntry
+import scenarios.entry.jvm.base.sendAndReceive
+import scenarios.entry.jvm.base.someCreateEntry
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-abstract class ScenarioUpdateEntry(
+abstract class ScenarioUpdateEntryJvm(
     private val client: Client,
     private val debug: EntryDebug? = null
 ) {
@@ -27,7 +17,7 @@ abstract class ScenarioUpdateEntry(
     fun update() = runBlocking {
         val obj = someCreateEntry
         val resCreate = client.sendAndReceive(
-            "entry/create", EntryCreateRequest(
+            "create", EntryCreateRequest(
                 requestType = "create",
                 debug = debug,
                 entry = obj,
@@ -51,7 +41,7 @@ abstract class ScenarioUpdateEntry(
             comment = "Обновлённый комментарий"
         )
         val resUpdate = client.sendAndReceive(
-            "entry/update",
+            "update",
             EntryUpdateRequest(
                 requestType = "update",
                 debug = debug,
@@ -68,7 +58,7 @@ abstract class ScenarioUpdateEntry(
         assertEquals(obj.comment, ruObj.comment)
 
         val resDelete = client.sendAndReceive(
-            "entry/delete", EntryDeleteRequest(
+            "delete", EntryDeleteRequest(
                 requestType = "delete",
                 debug = debug,
                 entry = EntryDeleteObject(cObj.id, cObj.lock),

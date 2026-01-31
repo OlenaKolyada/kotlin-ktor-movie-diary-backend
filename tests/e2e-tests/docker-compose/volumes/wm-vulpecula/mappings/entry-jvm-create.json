@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/entry/jvm/create"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "create",
+      "result": "success",
+      "entry": {
+        "id": "44665544000",
+        "userId": "user:12345",
+        "movieId": "{{{jsonPath request.body '$.entry.movieId'}}}",
+        "viewingDate": "{{{jsonPath request.body '$.entry.viewingDate'}}}",
+        "rating": "{{{jsonPath request.body '$.entry.rating'}}}",
+        "comment": "{{{jsonPath request.body '$.entry.comment'}}}"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

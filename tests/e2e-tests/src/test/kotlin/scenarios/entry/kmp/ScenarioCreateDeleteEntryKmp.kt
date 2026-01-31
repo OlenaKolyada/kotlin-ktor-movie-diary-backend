@@ -1,22 +1,15 @@
-package scenarios.entry
+package scenarios.entry.kmp
 
 import base.client.Client
-import com.funkycorgi.vulpecula.entry.api.models.EntryCreateRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryCreateResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryDebug
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteObject
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteRequest
-import com.funkycorgi.vulpecula.entry.api.models.EntryDeleteResponse
-import com.funkycorgi.vulpecula.entry.api.models.EntryResponseObject
-import com.funkycorgi.vulpecula.entry.api.models.ResponseResult
+import com.funkycorgi.vulpecula.entry.api.kmp.models.*
 import io.kotest.engine.runBlocking
 import org.junit.jupiter.api.Test
-import scenarios.entry.base.sendAndReceive
-import scenarios.entry.base.someCreateEntry
+import scenarios.entry.kmp.base.sendAndReceive
+import scenarios.entry.kmp.base.someCreateEntry
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-abstract class ScenarioCreateDeleteEntry(
+abstract class ScenarioCreateDeleteEntryKmp(
     private val client: Client,
     private val debug: EntryDebug? = null
 ) {
@@ -24,8 +17,7 @@ abstract class ScenarioCreateDeleteEntry(
     fun createDelete() = runBlocking {
         val obj = someCreateEntry
         val resCreate = client.sendAndReceive(
-            "entry/create", EntryCreateRequest(
-                requestType = "create",
+            "create", EntryCreateRequest(
                 debug = debug,
                 entry = obj,
             )
@@ -40,8 +32,7 @@ abstract class ScenarioCreateDeleteEntry(
         assertEquals(obj.comment, cObj.comment)
 
         val resDelete = client.sendAndReceive(
-            "entry/delete", EntryDeleteRequest(
-                requestType = "delete",
+            "delete", EntryDeleteRequest(
                 debug = debug,
                 entry = EntryDeleteObject(cObj.id, cObj.lock),
             )

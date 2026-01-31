@@ -6,7 +6,7 @@ services:
       - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./volumes/nginx/html:/usr/share/nginx/html
     logging:
-      # используемый драйвер логгирования
+      # используемый драйвер логирования
       driver: "fluentd"
       options:
         # куда посылать лог-сообщения, необходимо чтобы адрес

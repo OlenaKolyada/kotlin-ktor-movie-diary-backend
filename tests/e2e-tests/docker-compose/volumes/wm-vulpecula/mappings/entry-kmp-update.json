@@ -1,13 +1,13 @@
 {
   "request": {
     "method": "POST",
-    "url": "/entry/create"
+    "url": "/entry/kmp/update"
   },
 
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "create",
+      "responseType": "update",
       "result": "success",
       "entry": {
         "id": "446655440000",
@@ -15,7 +15,7 @@
         "movieId": "movie:tt0111161",
         "viewingDate": "2025-10-15",
         "rating": 9,
-        "description": "Потрясающий фильм о надежде"
+        "comment": "Потрясающий фильм о надежде"
       }
     },
     "headers": {

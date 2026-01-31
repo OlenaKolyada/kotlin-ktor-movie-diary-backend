@@ -1,13 +1,12 @@
 {
   "request": {
     "method": "POST",
-    "url": "/entry/read"
+    "url": "/entry/kmp/delete"
   },
-
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "read",
+      "responseType": "delete",
       "result": "success",
       "entry": {
         "id": "{{{jsonPath request.body '$.entry.id'}}}",
@@ -15,7 +14,7 @@
         "movieId": "movie:tt0111161",
         "viewingDate": "2025-10-15",
         "rating": 9,
-        "description": "Потрясающий фильм о надежде"
+        "comment": "Потрясающий фильм о надежде"
       }
     },
     "headers": {
