@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/entry/delete"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "delete",
+      "result": "success",
+      "entry": {
+        "id": "{{{jsonPath request.body '$.entry.id'}}}",
+        "userId": "user:12345",
+        "movieId": "movie:tt0111161",
+        "viewingDate": "2025-10-15",
+        "rating": 9,
+        "description": "Потрясающий фильм о надежде"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

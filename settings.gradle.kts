@@ -11,3 +11,5 @@ plugins {
 rootProject.name = "vulpecula"
 
 includeBuild("backend")
+includeBuild("deploy")
+includeBuild("tests")

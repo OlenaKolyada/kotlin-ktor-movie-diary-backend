@@ -1,0 +1,76 @@
+# Минимальная версия инфраструктуры на базе
+# OpenSearch
+# OpenSearch Dashboards
+# Kafka
+# Logstash
+
+version: '3'
+services:
+
+  app:
+    image: curlimages/curl:latest
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./volumes/app-rabbit/send-jsons.sh:/send-jsons.sh
+    entrypoint: /send-jsons.sh
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"    # AMQP порт
+      - "15672:15672"  # Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  logstash:
+    container_name: logstash
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:latest
+    depends_on:
+      - rabbitmq
+      - opensearch
+    ports:
+      - "5044:5044"
+      - "1111:1111"
+    environment:
+      RABBITMQ_HOST: "rabbitmq"
+      RABBITMQ_PORT: "5672"
+    volumes:
+      - ./volumes/logstash/10-mp-logs.conf:/usr/share/logstash/pipeline/10-mp-logs.conf
+
+  opensearch:
+    container_name: opensearch
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - http.port=9200
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - '9200:9200'
+      - '9600:9600'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_HOSTS: '["https://opensearch:9200"]'
+    depends_on:
+      - opensearch
+
+volumes:
+  opensearch-data:

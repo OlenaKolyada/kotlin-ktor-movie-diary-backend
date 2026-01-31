@@ -1,4 +1,4 @@
-rootProject.name = "backend"
+rootProject.name = "deploy"
 
 dependencyResolutionManagement {
     versionCatalogs {
@@ -20,14 +20,4 @@ pluginManagement {
     }
 }
 
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-include(":entry-api-jvm")
-include(":entry-api-jvm-mappers")
-include(":entry-api-kmp")
-include(":entry-common")
-include(":entry-stubs")
+include(":vulpecula-dcompose")

@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/entry/update"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "update",
+      "result": "success",
+      "entry": {
+        "id": "446655440000",
+        "userId": "user:12345",
+        "movieId": "movie:tt0111161",
+        "viewingDate": "2025-10-15",
+        "rating": 9,
+        "description": "Потрясающий фильм о надежде"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
