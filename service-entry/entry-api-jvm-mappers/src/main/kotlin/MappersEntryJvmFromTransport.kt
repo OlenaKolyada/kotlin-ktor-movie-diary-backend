@@ -38,54 +38,54 @@ fun EntryContext.fromTransport(request: IRequest) = when (request) {
 
 fun EntryContext.fromTransport(request: EntryCreateRequest) {
     command = EntryCommand.CREATE
-    entryRequest = request.entry?.toInternal() ?: Entry()
+    entryRequest = request.entry?.toEntry() ?: Entry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntryReadRequest) {
     command = EntryCommand.READ
-    entryRequest = request.entry.toInternal()
+    entryRequest = request.entry.toEntry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntryUpdateRequest) {
     command = EntryCommand.UPDATE
-    entryRequest = request.entry?.toInternal() ?: Entry()
+    entryRequest = request.entry?.toEntry() ?: Entry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntryDeleteRequest) {
     command = EntryCommand.DELETE
-    entryRequest = request.entry.toInternal()
+    entryRequest = request.entry.toEntry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntrySearchRequest) {
     command = EntryCommand.SEARCH
-    entryFilterRequest = request.entryFilter.toInternal()
+    entryFilterRequest = request.entryFilter.toEntry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun EntryCreateObject.toInternal(): Entry = Entry(
+private fun EntryCreateObject.toEntry(): Entry = Entry(
     movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
     viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
     rating = this.rating ?: -1,
     comment = this.comment ?: "",
 )
 
-private fun EntryReadObject?.toInternal(): Entry =
+private fun EntryReadObject?.toEntry(): Entry =
     if (this != null) {
         Entry(id = id.toEntryId())
     } else {
         Entry()
 }
 
-private fun EntryUpdateObject.toInternal(): Entry = Entry(
+private fun EntryUpdateObject.toEntry(): Entry = Entry(
     id = this.id.toEntryId(),
     movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
     viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
@@ -94,7 +94,7 @@ private fun EntryUpdateObject.toInternal(): Entry = Entry(
     lock = lock.toEntryLock(),
 )
 
-private fun EntryDeleteObject?.toInternal(): Entry =
+private fun EntryDeleteObject?.toEntry(): Entry =
     if (this != null) {
         Entry(
             id = id.toEntryId(),
@@ -104,7 +104,7 @@ private fun EntryDeleteObject?.toInternal(): Entry =
         Entry()
 }
 
-private fun EntrySearchFilter?.toInternal(): EntryFilter = EntryFilter(
+private fun EntrySearchFilter?.toEntry(): EntryFilter = EntryFilter(
     searchString = this?.searchString ?: "",
     movieId = this?.movieId?.toMovieId() ?: MovieId.NONE,
     viewingDateFrom = this?.viewingDateFrom?.toViewingDate() ?: ViewingDate.NONE,

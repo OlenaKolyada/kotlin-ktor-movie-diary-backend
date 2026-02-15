@@ -11,14 +11,16 @@ val entryApiJvmSerializer = JsonMapper.builder().run {
 }
 
 @Suppress("unused")
-fun entryApiJvmRequestSerialize(request: IRequest): String = entryApiJvmSerializer.writeValueAsString(request)
+fun entryApiJvmRequestSerialize(request: IRequest): String =
+    entryApiJvmSerializer.writeValueAsString(request)
 
 @Suppress("UNCHECKED_CAST", "unused")
 fun <T : IRequest> entryApiJvmRequestDeserialize(json: String): T =
     entryApiJvmSerializer.readValue(json, IRequest::class.java) as T
 
 @Suppress("unused")
-fun entryApiJvmResponseSerialize(response: IResponse): String = entryApiJvmSerializer.writeValueAsString(response)
+fun entryApiJvmResponseSerialize(response: IResponse): String =
+    entryApiJvmSerializer.writeValueAsString(response)
 
 @Suppress("UNCHECKED_CAST", "unused")
 fun <T : IResponse> entryApiJvmResponseDeserialize(json: String): T =
