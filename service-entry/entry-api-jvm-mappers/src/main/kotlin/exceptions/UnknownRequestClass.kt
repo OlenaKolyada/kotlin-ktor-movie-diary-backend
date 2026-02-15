@@ -1,3 +1,3 @@
 package com.funkycorgi.vulpecula.entry.api.jvm.mappers.exceptions
 
-class UnknownRequestClass(clazz: Class<*>) : RuntimeException("Class $clazz cannot be mapped to EntryContext")
+class UnknownRequestClass(requestClass: Class<*>) : RuntimeException("Class $requestClass cannot be mapped to EntryContext")
