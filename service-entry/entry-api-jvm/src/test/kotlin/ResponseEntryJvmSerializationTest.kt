@@ -17,7 +17,7 @@ class ResponseEntryJvmSerializationTest {
 
     @Test
     fun serialize() {
-        val json = entryApiJvmMapper.writeValueAsString(response)
+        val json = entryApiJvmSerializer.writeValueAsString(response)
 
         assertContains(json, Regex("\"movieId\":\\s*\"movie:tt0111161\""))
         assertContains(json, Regex("\"viewingDate\":\\s*\"2025-12-15\""))
@@ -27,8 +27,8 @@ class ResponseEntryJvmSerializationTest {
 
     @Test
     fun deserialize() {
-        val json = entryApiJvmMapper.writeValueAsString(response)
-        val obj = entryApiJvmMapper.readValue(json, IResponse::class.java) as EntryCreateResponse
+        val json = entryApiJvmSerializer.writeValueAsString(response)
+        val obj = entryApiJvmSerializer.readValue(json, IResponse::class.java) as EntryCreateResponse
 
         assertEquals(response, obj)
     }

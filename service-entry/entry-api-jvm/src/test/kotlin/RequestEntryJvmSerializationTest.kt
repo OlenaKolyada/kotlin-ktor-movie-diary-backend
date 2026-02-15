@@ -21,7 +21,7 @@ class RequestEntryJvmSerializationTest {
 
     @Test
     fun serialize() {
-        val json = entryApiJvmMapper.writeValueAsString(request)
+        val json = entryApiJvmSerializer.writeValueAsString(request)
 
         assertContains(json, Regex("\"movieId\":\\s*\"movie:tt0111161\""))
         assertContains(json, Regex("\"viewingDate\":\\s*\"2025-12-15\""))
@@ -33,8 +33,8 @@ class RequestEntryJvmSerializationTest {
 
     @Test
     fun deserialize() {
-        val json = entryApiJvmMapper.writeValueAsString(request)
-        val obj = entryApiJvmMapper.readValue(json, IRequest::class.java) as EntryCreateRequest
+        val json = entryApiJvmSerializer.writeValueAsString(request)
+        val obj = entryApiJvmSerializer.readValue(json, IRequest::class.java) as EntryCreateRequest
 
         assertEquals(request, obj)
     }
@@ -44,7 +44,7 @@ class RequestEntryJvmSerializationTest {
         val jsonString = """
             {"entry": null}
         """.trimIndent()
-        val obj = entryApiJvmMapper.readValue(jsonString, EntryCreateRequest::class.java)
+        val obj = entryApiJvmSerializer.readValue(jsonString, EntryCreateRequest::class.java)
 
         assertEquals(null, obj.entry)
     }

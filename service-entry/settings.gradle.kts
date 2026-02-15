@@ -1,4 +1,4 @@
-rootProject.name = "backend"
+rootProject.name = "service-entry"
 
 dependencyResolutionManagement {
     versionCatalogs {

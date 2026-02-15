@@ -10,6 +10,6 @@ plugins {
 }
 rootProject.name = "vulpecula"
 
-includeBuild("backend")
+includeBuild("service-entry")
 includeBuild("deploy")
-includeBuild("tests")
+includeBuild("qa")

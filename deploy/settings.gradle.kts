@@ -20,4 +20,4 @@ pluginManagement {
     }
 }
 
-include(":vulpecula-dcompose")
+include(":docker")

@@ -40,7 +40,6 @@ tasks {
         group = rootProject.group
         version = rootProject.version
 
-        // Только для проектов с Java-плагином
         afterEvaluate {
             if (plugins.hasPlugin("java") || plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
                 the<JavaPluginExtension>().apply {

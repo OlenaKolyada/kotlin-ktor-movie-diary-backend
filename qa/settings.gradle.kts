@@ -1,4 +1,4 @@
-rootProject.name = "tests"
+rootProject.name = "qa"
 
 dependencyResolutionManagement {
     versionCatalogs {

@@ -9,7 +9,7 @@ Educational project for the Kotlin Backend Developer course. Course stream 2025-
 The project is named after the Vulpecula constellation (Latin for "little fox"), in memory of a beloved corgi who was affectionately called "little fox" by everyone.
 
 ## Frontend Prototype
-![Frontend Prototype](img/frontend-prototype.jpg)
+![Frontend Prototype](docs/img/frontend-prototype.jpg)
 
 ## Documentation
 1. Marketing and Analytics

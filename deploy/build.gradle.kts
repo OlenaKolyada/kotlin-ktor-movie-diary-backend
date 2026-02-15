@@ -20,6 +20,6 @@ subprojects {
 tasks {
     register("buildInfra") {
         group = "build"
-        dependsOn(project(":vulpecula-dcompose").getTasksByName("publish",false))
+        dependsOn(project(":docker").getTasksByName("publish",false))
     }
 }
