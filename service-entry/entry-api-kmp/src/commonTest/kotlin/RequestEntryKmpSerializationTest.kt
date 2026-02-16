@@ -14,7 +14,7 @@ class RequestEntryKmpSerializationTest {
     private val request: IRequest = EntryCreateRequest(
         debug = EntryDebug(
             mode = EntryRequestDebugMode.STUB,
-            stub = EntryRequestDebugStubs.BAD_RATING
+            stub = EntryRequestDebugStubs.BAD_ID
         ),
         entry = EntryCreateObject(
             movieId = "movie:tt0111161",

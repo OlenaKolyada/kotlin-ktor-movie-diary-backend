@@ -5,7 +5,7 @@ import com.funkycorgi.vulpecula.entry.api.kmp.models.*
 import com.funkycorgi.vulpecula.entry.common.EntryContext
 import com.funkycorgi.vulpecula.entry.common.models.*
 
-fun EntryContext.toTransportAd(): IResponse = when (val cmd = command) {
+fun EntryContext.toTransportEntry(): IResponse = when (val cmd = command) {
     EntryCommand.CREATE -> toTransportCreate()
     EntryCommand.READ -> toTransportRead()
     EntryCommand.UPDATE -> toTransportUpdate()

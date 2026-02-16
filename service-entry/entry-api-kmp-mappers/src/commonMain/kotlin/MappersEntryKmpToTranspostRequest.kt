@@ -6,7 +6,7 @@ import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryReadObject
 import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryUpdateObject
 import com.funkycorgi.vulpecula.entry.common.models.Entry
 
-fun Entry.toTransportCreateAd() = EntryCreateObject(
+fun Entry.toTransportCreateEntry() = EntryCreateObject(
     movieId = movieId.toTransportEntry(),
     viewingDate = viewingDate.toTransportEntry(),
     rating = rating,
