@@ -17,7 +17,7 @@ fun EntryContext.fromTransport(request: IRequest) = when (request) {
 
 private fun String?.toEntryId() = this?.let { EntryId(it) } ?: EntryId.NONE
 private fun String?.toEntryLock() = this?.let { EntryLock(it) } ?: EntryLock.NONE
-private fun EntryReadObject?.toInternal() = if (this != null) {
+private fun EntryReadObject?.toEntry() = if (this != null) {
     Entry(id = id.toEntryId())
 } else {
     Entry()
@@ -47,33 +47,33 @@ private fun EntryDebug?.transportToStubCase(): EntryStubs = when (this?.stub) {
 
 fun EntryContext.fromTransport(request: EntryCreateRequest) {
     command = EntryCommand.CREATE
-    entryRequest = request.entry?.toInternal() ?: Entry()
+    entryRequest = request.entry?.toEntry() ?: Entry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntryReadRequest) {
     command = EntryCommand.READ
-    entryRequest = request.entry.toInternal()
+    entryRequest = request.entry.toEntry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntryUpdateRequest) {
     command = EntryCommand.UPDATE
-    entryRequest = request.entry?.toInternal() ?: Entry()
+    entryRequest = request.entry?.toEntry() ?: Entry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
 fun EntryContext.fromTransport(request: EntryDeleteRequest) {
     command = EntryCommand.DELETE
-    entryRequest = request.entry.toInternal()
+    entryRequest = request.entry.toEntry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun EntryDeleteObject?.toInternal(): Entry = if (this != null) {
+private fun EntryDeleteObject?.toEntry(): Entry = if (this != null) {
     Entry(
         id = id.toEntryId(),
         lock = lock.toEntryLock(),
@@ -84,23 +84,23 @@ private fun EntryDeleteObject?.toInternal(): Entry = if (this != null) {
 
 fun EntryContext.fromTransport(request: EntrySearchRequest) {
     command = EntryCommand.SEARCH
-    entryFilterRequest = request.entryFilter.toInternal()
+    entryFilterRequest = request.entryFilter.toEntry()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
 
-private fun EntrySearchFilter?.toInternal(): EntryFilter = EntryFilter(
+private fun EntrySearchFilter?.toEntry(): EntryFilter = EntryFilter(
     searchString = this?.searchString ?: ""
 )
 
-private fun EntryCreateObject.toInternal(): Entry = Entry(
+private fun EntryCreateObject.toEntry(): Entry = Entry(
     movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
     viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
     rating = this.rating ?: -1,
     comment = this.comment ?: "",
 )
 
-private fun EntryUpdateObject.toInternal(): Entry = Entry(
+private fun EntryUpdateObject.toEntry(): Entry = Entry(
     id = this.id.toEntryId(),
     movieId = this.movieId?.toMovieId() ?: MovieId.NONE,
     viewingDate = this.viewingDate?.toViewingDate() ?: ViewingDate.NONE,
