@@ -1,11 +1,11 @@
-import base.BaseContainerTest
-import base.client.Client
-import base.client.RestClient
+import infrastructure.BaseContainerTest
+import infrastructure.client.Client
+import infrastructure.client.RestClient
 import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryDebug as EntryDebugJvm
 import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryRequestDebugMode as EntryRequestDebugModeJvm
 import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryDebug as EntryDebugKmp
 import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryRequestDebugMode as EntryRequestDebugModeKmp
-import docker.WiremockDockerCompose
+import environments.WiremockTestEnvironment
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -13,8 +13,8 @@ import scenarios.entry.jvm.ScenariosEntryJvm
 import scenarios.entry.kmp.ScenariosEntryKmp
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TestWireMock: BaseContainerTest(WiremockDockerCompose) {
-    private val client: Client = RestClient(compose)
+class TestWireMock: BaseContainerTest(WiremockTestEnvironment) {
+    private val client: Client = RestClient(testEnvironment)
     @Test
     fun info() {
         println("${this::class.simpleName}")

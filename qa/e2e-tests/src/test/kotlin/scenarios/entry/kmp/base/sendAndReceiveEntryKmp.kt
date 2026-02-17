@@ -1,6 +1,6 @@
 package scenarios.entry.kmp.base
 
-import base.client.Client
+import infrastructure.client.Client
 import co.touchlab.kermit.Logger
 import com.funkycorgi.vulpecula.entry.api.kmp.entryApiKmpRequestSerialize
 import com.funkycorgi.vulpecula.entry.api.kmp.entryApiKmpResponseDeserialize
@@ -11,10 +11,10 @@ private val log = Logger
 
 suspend fun Client.sendAndReceive(path: String, request: IRequest): IResponse {
     val requestBody = entryApiKmpRequestSerialize(request)
-    log.w { "Send to entry/kmp/$path\n$requestBody" }
+    log.i { "Send to entry/kmp/$path\n$requestBody" }
 
     val responseBody = sendAndReceive("entry/kmp", path, requestBody)
-    log.w { "Received\n$responseBody" }
+    log.i { "Received\n$responseBody" }
 
     return entryApiKmpResponseDeserialize(responseBody)
 }

@@ -1,6 +1,6 @@
 package scenarios.entry.kmp
 
-import base.client.Client
+import infrastructure.client.Client
 import com.funkycorgi.vulpecula.entry.api.kmp.models.EntryDebug
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.TestInstance

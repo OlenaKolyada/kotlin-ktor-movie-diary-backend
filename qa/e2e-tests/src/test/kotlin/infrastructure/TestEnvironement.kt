@@ -1,4 +1,4 @@
-package base
+package infrastructure
 
 import io.ktor.http.URLBuilder
 
@@ -6,7 +6,7 @@ import io.ktor.http.URLBuilder
  * Это обертка над сервисами в docker-compose. Позволяет их запускать и останавливать,
  * получать url для отправки запросов и очищать БД (чтобы между тестами не делать пересоздание контейнеров)
  */
-interface DockerCompose {
+interface TestEnvironment {
     fun start()
     fun stop()
 

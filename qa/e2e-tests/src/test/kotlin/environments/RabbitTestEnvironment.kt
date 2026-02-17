@@ -1,8 +1,8 @@
-package docker
+package environments
 
-import base.AbstractDockerCompose
+import infrastructure.AbstractTestEnvironment
 
-object RabbitDockerCompose : AbstractDockerCompose(
+object RabbitTestEnvironment : AbstractTestEnvironment(
     "rabbit_1", 5672, "docker-compose-rabbit.yml"
 ) {
     override val user: String

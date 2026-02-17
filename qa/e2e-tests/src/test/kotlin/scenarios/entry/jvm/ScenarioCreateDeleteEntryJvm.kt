@@ -1,6 +1,6 @@
 package scenarios.entry.jvm
 
-import base.client.Client
+import infrastructure.client.Client
 import com.funkycorgi.vulpecula.entry.api.jvm.models.*
 import io.kotest.engine.runBlocking
 import org.junit.jupiter.api.Test

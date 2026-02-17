@@ -40,7 +40,6 @@ object EntryStubObjects {
             rating = -1
         )
 
-    // не забыть добавить валидацию в логику
     val ENTRY_BAD_VIEWING_DATE: Entry
         get() = Entry(
             viewingDate = ViewingDate(LocalDate(1800, 1, 1))

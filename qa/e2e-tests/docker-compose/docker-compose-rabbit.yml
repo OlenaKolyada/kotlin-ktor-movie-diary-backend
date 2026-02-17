@@ -1,5 +1,3 @@
-# Конфигурация для rabbit
-
 services:
   app-rabbit:
     image: vulpecula-app-rabbit:latest

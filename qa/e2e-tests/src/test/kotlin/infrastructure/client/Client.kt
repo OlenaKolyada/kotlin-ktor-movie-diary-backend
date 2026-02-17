@@ -1,4 +1,4 @@
-package base.client
+package infrastructure.client
 
 /**
  * Клиент к нашему приложению в докер-композе, который умеет отправлять запрос и получать ответ.

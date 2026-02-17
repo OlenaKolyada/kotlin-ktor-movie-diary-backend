@@ -1,6 +1,6 @@
 package scenarios.entry.jvm
 
-import base.client.Client
+import infrastructure.client.Client
 import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryDebug
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.TestInstance

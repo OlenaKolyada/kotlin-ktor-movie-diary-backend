@@ -1,6 +1,6 @@
-package base.client
+package infrastructure.client
 
-import base.DockerCompose
+import infrastructure.TestEnvironment
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.okhttp.*
@@ -10,8 +10,8 @@ import io.ktor.http.*
 /**
  * Отправка запросов по http/rest
  */
-class RestClient(dockerCompose: DockerCompose) : Client {
-    private val urlBuilder by lazy { dockerCompose.inputUrl }
+class RestClient(testEnvironment: TestEnvironment) : Client {
+    private val urlBuilder by lazy { testEnvironment.inputUrl }
     private val client = HttpClient(OkHttp)
     override suspend fun sendAndReceive(version: String, path: String, request: String): String {
         val url = urlBuilder.apply {

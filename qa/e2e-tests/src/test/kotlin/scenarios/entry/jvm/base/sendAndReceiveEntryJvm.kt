@@ -1,6 +1,6 @@
 package scenarios.entry.jvm.base
 
-import base.client.Client
+import infrastructure.client.Client
 import co.touchlab.kermit.Logger
 import com.funkycorgi.vulpecula.entry.api.jvm.entryApiJvmRequestSerialize
 import com.funkycorgi.vulpecula.entry.api.jvm.entryApiJvmResponseDeserialize
