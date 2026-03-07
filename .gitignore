@@ -9,3 +9,4 @@ gradle-app.setting
 .idea/
 .kotlin/
 **/*.iml
+CLAUDE.md

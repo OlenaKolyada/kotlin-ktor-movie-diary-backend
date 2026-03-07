@@ -12,4 +12,4 @@ rootProject.name = "vulpecula"
 
 includeBuild("service-entry")
 includeBuild("deploy")
-includeBuild("qa")
+//includeBuild("qa")

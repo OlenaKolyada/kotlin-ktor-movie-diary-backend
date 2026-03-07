@@ -12,7 +12,7 @@ pluginManagement {
     includeBuild("../build-plugin")
     plugins {
         id("build-jvm") apply false
-        id("build-kmp") apply false
+//        id("build-kmp") apply false
     }
     repositories {
         mavenCentral()
@@ -28,7 +28,8 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":entry-api-jvm")
 include(":entry-api-jvm-mappers")
-include(":entry-api-kmp")
-include(":entry-api-kmp-mappers")
+//include(":entry-api-kmp")
+//include(":entry-api-kmp-mappers")
+//include(":entry-app-ktor")
 include(":entry-common")
 include(":entry-stubs")
