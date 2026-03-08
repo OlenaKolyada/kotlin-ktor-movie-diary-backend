@@ -19,6 +19,8 @@ ktor = "2.3.9"
 
 #Testing
 testcontainers = "1.19.7"
+rabbitmq = "5.20.0"
+shadowJar = "8.3.6"
 
 # BASE
 #jvm-compiler = "17"
@@ -51,6 +53,8 @@ kotest-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kote
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-rabbitmq = { module = "org.testcontainers:rabbitmq", version.ref = "testcontainers" }
+rabbitmq-client = { module = "com.rabbitmq:amqp-client", version.ref = "rabbitmq" }
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-property"]
@@ -62,3 +66,4 @@ openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-gener
 crowdproj-generator = { id = "com.crowdproj.generator", version = "0.3.0" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+shadowJar = { id = "com.gradleup.shadow", version.ref = "shadowJar" }

@@ -31,30 +31,35 @@ fun EntryContext.toTransportEntry(): IResponse = when (val cmd = command) {
 }
 
 fun EntryContext.toTransportCreate() = EntryCreateResponse(
+    responseType = "create",
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     entry = entryResponse.toTransportEntry(),
 )
 
 fun EntryContext.toTransportRead() = EntryReadResponse(
+    responseType = "read",
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     entry = entryResponse.toTransportEntry()
 )
 
 fun EntryContext.toTransportUpdate() = EntryUpdateResponse(
+    responseType = "update",
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     entry = entryResponse.toTransportEntry()
 )
 
 fun EntryContext.toTransportDelete() = EntryDeleteResponse(
+    responseType = "delete",
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     entry = entryResponse.toTransportEntry()
 )
 
 fun EntryContext.toTransportSearch() = EntrySearchResponse(
+    responseType = "search",
     result = state.toResult(),
     errors = errors.toTransportErrors(),
     propertyEntries = entriesResponse.toTransportEntry()

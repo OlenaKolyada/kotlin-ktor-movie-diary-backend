@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 
 class ResponseEntryJvmSerializationTest {
     private val response = EntryCreateResponse(
+        responseType = "create",
         entry = EntryResponseObject(
             movieId = "movie:tt0111161",
             viewingDate = "2025-12-15",

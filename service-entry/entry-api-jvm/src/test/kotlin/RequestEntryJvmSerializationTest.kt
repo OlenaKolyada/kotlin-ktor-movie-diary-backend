@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 
 class RequestEntryJvmSerializationTest {
     private val request = EntryCreateRequest(
+        requestType = "create",
         debug = EntryDebug(
             mode = EntryRequestDebugMode.STUB,
             stub = EntryRequestDebugStubs.BAD_ID
