@@ -1,7 +1,7 @@
 # Архитектурная диаграмма
 
 ## Диаграмма контекста C4
-![C4 Context Diagram](../../../img/arch-C4-Context.png)
+![C4 Context Diagram](../../img/arch-C4-Context.png)
 
 ## Диаграмма контейнеров C4
 *Диаграмма будет разработана на следующем этапе проекта*
@@ -10,4 +10,4 @@
 *Диаграмма будет разработана на следующем этапе проекта*
 
 ## Упрощенная (луковичная) диаграмма компонентов
-![Onion Architecture Diagram](../../../img/arch-onion.png)
+![Onion Architecture Diagram](../../img/arch-onion.png)

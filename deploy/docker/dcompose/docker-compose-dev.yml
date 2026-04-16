@@ -1,0 +1,26 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  entry-app-ktor:
+    build:
+      context: ../../../service-entry/entry-app-ktor
+    ports:
+      - "8080:8080"
+
+  entry-app-rabbit:
+    build:
+      context: ../../../service-entry/entry-app-rabbit
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    command: ["java", "-jar", "app.jar", "-h", "rabbitmq"]
