@@ -12,10 +12,10 @@ allprojects {
     }
 }
 
-subprojects {
-    group = rootProject.group
-    version = rootProject.version
-}
+//subprojects {
+//    group = rootProject.group
+//    version = rootProject.version
+//}
 
 ext {
     val specDir = layout.projectDirectory.dir("../specs")

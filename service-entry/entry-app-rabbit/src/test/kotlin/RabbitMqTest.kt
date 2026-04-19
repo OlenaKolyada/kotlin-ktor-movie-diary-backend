@@ -8,7 +8,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 import org.junit.AfterClass
 import org.junit.BeforeClass
-import org.testcontainers.containers.RabbitMQContainer
+import org.testcontainers.rabbitmq.RabbitMQContainer
 import com.funkycorgi.vulpecula.entry.api.jvm.entryApiJvmSerializer
 import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryCreateObject
 import com.funkycorgi.vulpecula.entry.api.jvm.models.EntryCreateRequest
