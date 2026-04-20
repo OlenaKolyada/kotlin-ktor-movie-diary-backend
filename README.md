@@ -1,6 +1,6 @@
 # Vulpecula
 
-English | [Русский](README_RU.md)
+English | [Русский](README.ru.md)
 
 **Vulpecula** is an educational Kotlin/Ktor backend project: an RPC-style HTTP API for a movie viewing diary. Users can keep a history of watched movies, save ratings and comments, build a personal viewing collection, and receive statistics about their preferences.
 
