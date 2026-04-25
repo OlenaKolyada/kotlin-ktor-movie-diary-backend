@@ -4,7 +4,7 @@
 
 Educational project for the Kotlin Backend Developer course. Course stream 2025-08.
 
-**Vulpecula** is a movie diary where users track their viewing history with ratings and comments. The app provides users with a convenient way to track their impressions of movies, build a personal viewing collection, and get statistics on their preferences.
+**Vulpecula** is an Entry management microservice for a movie diary where users track their viewing history with ratings and comments. The app provides users with a convenient way to track their impressions of movies, build a personal viewing collection, and get statistics on their preferences.
 
 The project is named after the Vulpecula constellation (Latin for "little fox"), in memory of a beloved corgi who was affectionately called "little fox" by everyone.
 
