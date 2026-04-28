@@ -5,4 +5,6 @@ data class EntryFilter(
     var movieId: MovieId = MovieId.NONE,
     var viewingDateFrom: ViewingDate = ViewingDate.NONE,
     var viewingDateTo: ViewingDate = ViewingDate.NONE,
-)
+) {
+    fun deepCopy(): EntryFilter = copy()
+}

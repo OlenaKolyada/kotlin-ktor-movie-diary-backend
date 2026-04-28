@@ -18,6 +18,12 @@ data class EntryContext(
     var entryRequest: Entry = Entry(),
     var entryFilterRequest: EntryFilter = EntryFilter(),
 
+    var entryValidating: Entry = Entry(),
+    var entryFilterValidating: EntryFilter = EntryFilter(),
+
+    var entryValidated: Entry = Entry(),
+    var entryFilterValidated: EntryFilter = EntryFilter(),
+
     var entryResponse: Entry = Entry(),
     var entriesResponse: MutableList<Entry> = mutableListOf(),
 )

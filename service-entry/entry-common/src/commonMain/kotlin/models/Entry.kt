@@ -16,6 +16,10 @@ data class Entry(
     var createdAt: Instant = Instant.NONE,
     var updatedAt: Instant = Instant.NONE,
 ) {
+    fun deepCopy(): Entry = copy(
+        userPermissions = userPermissions.toMutableSet(),
+    )
+
     fun isEmpty() = this == NONE
 
     companion object {
