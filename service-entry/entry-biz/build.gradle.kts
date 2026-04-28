@@ -9,6 +9,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(projects.entryCommon)
                 implementation(projects.entryStubs)
+                implementation(projects.entryLibCor)
             }
         }
         commonTest {
