@@ -1,6 +1,8 @@
 package com.funkycorgi.vulpecula.entry.common.helpers
 
+import com.funkycorgi.vulpecula.entry.common.EntryContext
 import com.funkycorgi.vulpecula.entry.common.models.EntryError
+import com.funkycorgi.vulpecula.entry.common.models.EntryState
 
 fun Throwable.asEntryError(
     code: String = "unknown",
@@ -13,3 +15,10 @@ fun Throwable.asEntryError(
     message = message,
     exception = this,
 )
+
+fun EntryContext.addError(vararg error: EntryError) = errors.addAll(error)
+
+fun EntryContext.fail(error: EntryError) {
+    addError(error)
+    state = EntryState.FAILING
+}

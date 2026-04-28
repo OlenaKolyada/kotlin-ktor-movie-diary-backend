@@ -9,6 +9,7 @@ data class EntryContext(
     var state: EntryState = EntryState.NONE,
     val errors: MutableList<EntryError> = mutableListOf(),
 
+    var corSettings: EntryCorSettings = EntryCorSettings(),
     var workMode: EntryWorkMode = EntryWorkMode.PROD,
     var stubCase: EntryStubs = EntryStubs.NONE,
 

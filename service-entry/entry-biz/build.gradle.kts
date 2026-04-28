@@ -26,7 +26,14 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation(libs.coroutines.test)
             }
         }
     }
+}
+
+tasks.withType<Test>().configureEach {
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(23))
+    })
 }
