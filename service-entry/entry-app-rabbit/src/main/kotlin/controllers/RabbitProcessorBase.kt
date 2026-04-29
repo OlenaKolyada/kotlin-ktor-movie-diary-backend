@@ -89,7 +89,7 @@ abstract class RabbitProcessorBase @OptIn(ExperimentalCoroutinesApi::class) cons
     ) {
         withContext(Dispatchers.IO) {
             exchangeDeclare(exchangeConfig.exchange, exchangeConfig.exchangeType)
-            queueDeclare(exchangeConfig.queue, false, false, false, null)
+            queueDeclare(exchangeConfig.queue, true, false, false, null)
             queueBind(exchangeConfig.queue, exchangeConfig.exchange, exchangeConfig.keyIn)
             basicConsume(
                 exchangeConfig.queue,
