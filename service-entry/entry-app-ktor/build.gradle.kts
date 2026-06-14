@@ -50,6 +50,7 @@ dependencies {
     implementation(projects.entryApiJvmMappers)
     implementation(projects.entryStubs)
     implementation(projects.entryRepoInmemory)
+    implementation(projects.entryRepoPgjvm)
     implementation(projects.entryRepoStubs)
 
     testImplementation(kotlin("test-junit"))
