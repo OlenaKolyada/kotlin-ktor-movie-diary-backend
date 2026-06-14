@@ -111,6 +111,7 @@ class EntryProcessor(
             chain {
                 title = "Update repository logic"
                 repoRead("Read entry before update")
+                checkLock("Check optimistic lock consistency")
                 repoPrepareUpdate("Prepare entry for update")
                 repoUpdate("Update entry in repository")
             }
@@ -138,6 +139,7 @@ class EntryProcessor(
             chain {
                 title = "Delete repository logic"
                 repoRead("Read entry before delete")
+                checkLock("Check optimistic lock consistency")
                 repoPrepareDelete("Prepare entry for delete")
                 repoDelete("Delete entry from repository")
             }

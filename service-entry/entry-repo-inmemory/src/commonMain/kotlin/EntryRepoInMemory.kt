@@ -3,6 +3,7 @@ package com.funkycorgi.vulpecula.entry.repo.inmemory
 import com.benasher44.uuid.uuid4
 import com.funkycorgi.vulpecula.entry.common.models.*
 import com.funkycorgi.vulpecula.entry.common.repo.*
+import com.funkycorgi.vulpecula.entry.common.repo.exceptions.RepoEmptyLockException
 import com.funkycorgi.vulpecula.entry.repo.common.IRepoEntryInitializable
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.sync.Mutex
@@ -49,11 +50,14 @@ class EntryRepoInMemory(
         val requestEntry = request.entry
         val id = requestEntry.id.takeIf { it != EntryId.NONE } ?: return@tryEntryMethod errorEmptyId
         val key = id.asString()
+        val oldLock = requestEntry.lock.takeIf { it != EntryLock.NONE } ?: return@tryEntryMethod errorEmptyLock(id)
 
         mutex.withLock {
             val oldEntry = cache.get(key)?.toInternal()
             when {
                 oldEntry == null -> errorNotFound(id)
+                oldEntry.lock == EntryLock.NONE -> errorDb(RepoEmptyLockException(id))
+                oldEntry.lock != oldLock -> errorRepoConcurrency(oldEntry, oldLock)
                 else -> {
                     val newEntry = requestEntry.copy(lock = EntryLock(randomUuid()))
                     cache.put(key, EntryEntity(newEntry))
@@ -66,11 +70,14 @@ class EntryRepoInMemory(
     override suspend fun deleteEntry(request: DbEntryIdRequest): IDbEntryResponse = tryEntryMethod {
         val id = request.id.takeIf { it != EntryId.NONE } ?: return@tryEntryMethod errorEmptyId
         val key = id.asString()
+        val oldLock = request.lock.takeIf { it != EntryLock.NONE } ?: return@tryEntryMethod errorEmptyLock(id)
 
         mutex.withLock {
             val oldEntry = cache.get(key)?.toInternal()
             when {
                 oldEntry == null -> errorNotFound(id)
+                oldEntry.lock == EntryLock.NONE -> errorDb(RepoEmptyLockException(id))
+                oldEntry.lock != oldLock -> errorRepoConcurrency(oldEntry, oldLock)
                 else -> {
                     cache.invalidate(key)
                     DbEntryResponseOk(oldEntry)

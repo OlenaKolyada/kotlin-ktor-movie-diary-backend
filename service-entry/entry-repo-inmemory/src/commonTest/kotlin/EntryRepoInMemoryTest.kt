@@ -18,7 +18,7 @@ class EntryRepoInMemoryReadTest : RepoEntryReadTest() {
 
 class EntryRepoInMemoryUpdateTest : RepoEntryUpdateTest() {
     override val repo = EntryRepoInitialized(
-        EntryRepoInMemory(),
+        EntryRepoInMemory(randomUuid = { lockNew.asString() }),
         initObjects = initObjects,
     )
 }

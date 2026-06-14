@@ -2,6 +2,7 @@ package com.funkycorgi.vulpecula.entry.biz.validation
 
 import com.funkycorgi.vulpecula.entry.biz.EntryProcessor
 import com.funkycorgi.vulpecula.entry.common.EntryContext
+import com.funkycorgi.vulpecula.entry.common.EntryCorSettings
 import com.funkycorgi.vulpecula.entry.common.models.Entry
 import com.funkycorgi.vulpecula.entry.common.models.EntryCommand
 import com.funkycorgi.vulpecula.entry.common.models.EntryFilter
@@ -11,6 +12,8 @@ import com.funkycorgi.vulpecula.entry.common.models.EntryState
 import com.funkycorgi.vulpecula.entry.common.models.EntryWorkMode
 import com.funkycorgi.vulpecula.entry.common.models.MovieId
 import com.funkycorgi.vulpecula.entry.common.models.ViewingDate
+import com.funkycorgi.vulpecula.entry.common.repo.DbEntryResponseOk
+import com.funkycorgi.vulpecula.entry.repo.tests.EntryRepositoryMock
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
@@ -19,6 +22,19 @@ import kotlin.test.assertNotEquals
 
 class EntryValidationTest {
     private val processor = EntryProcessor()
+
+    private val stubEntry = Entry(
+        id = EntryId("entry:123"),
+        lock = EntryLock("lock-123"),
+    )
+    private val processorWithRepo = EntryProcessor(
+        EntryCorSettings(
+            repoTest = EntryRepositoryMock(
+                invokeReadEntry = { DbEntryResponseOk(stubEntry) },
+                invokeDeleteEntry = { DbEntryResponseOk(stubEntry) },
+            )
+        )
+    )
 
     @Test
     fun createValidatesAndTrims() = runTest {
@@ -121,7 +137,7 @@ class EntryValidationTest {
             entryRequest = Entry(id = EntryId(" entry:123 "), lock = EntryLock(" lock-123 ")),
         )
 
-        processor.exec(ctx)
+        processorWithRepo.exec(ctx)
 
         assertEquals(0, ctx.errors.size)
         assertEquals(EntryId("entry:123"), ctx.entryValidated.id)

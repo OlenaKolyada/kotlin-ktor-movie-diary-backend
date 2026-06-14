@@ -55,6 +55,7 @@ class EntryRepoApiTest {
         assertEquals(uuidNew, responseObj.entry?.id)
         assertEquals("movie:create", responseObj.entry?.movieId)
         assertEquals(9, responseObj.entry?.rating)
+        assertEquals(uuidNew, responseObj.entry?.lock)
     }
 
     @Test

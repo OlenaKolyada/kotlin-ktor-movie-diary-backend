@@ -12,7 +12,7 @@ object EntryStubObjects {
             viewingDate = ViewingDate(LocalDate(2025, 10, 15)),
             rating = 9,
             comment = "Потрясающий фильм о надежде",
-            lock = EntryLock("123"),
+            lock = EntryLock("123-234-abc-ABC"),
             userPermissions = mutableSetOf(
                 EntryUserPermission.READ,
                 EntryUserPermission.UPDATE,

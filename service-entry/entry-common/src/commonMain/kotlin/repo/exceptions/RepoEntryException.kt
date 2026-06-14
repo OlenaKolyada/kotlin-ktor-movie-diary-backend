@@ -2,7 +2,7 @@ package com.funkycorgi.vulpecula.entry.common.repo.exceptions
 
 import com.funkycorgi.vulpecula.entry.common.models.EntryId
 
-class RepoEntryException(
+open class RepoEntryException(
     id: EntryId,
     message: String,
     cause: Throwable? = null,
