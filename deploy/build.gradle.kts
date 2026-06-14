@@ -21,5 +21,6 @@ tasks {
     register("buildInfra") {
         group = "build"
         dependsOn(project(":docker").getTasksByName("publish",false))
+        dependsOn(project(":migration-pg").getTasksByName("buildImages", false))
     }
 }

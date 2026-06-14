@@ -30,6 +30,11 @@ tasks {
     register("check") {
         group = "verification"
     }
+
+    register("buildImages") {
+        group = "docker"
+        dependsOn(project(":entry-app-ktor").tasks.getByName("dockerBuild"))
+    }
 }
 
 subprojects {

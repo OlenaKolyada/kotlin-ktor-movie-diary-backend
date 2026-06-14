@@ -1,0 +1,6 @@
+stages:
+  Default:
+    actions:
+      - type: liquibase
+        command: update
+        cmdArgs: { changelog-file: "changelog-v0.0.1.sql" }

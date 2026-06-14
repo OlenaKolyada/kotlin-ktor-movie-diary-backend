@@ -1,5 +1,6 @@
 plugins {
     id("build-jvm")
+    id("build-docker")
     application
 }
 
@@ -9,6 +10,13 @@ plugins {
 
 application {
     mainClass.set("io.ktor.server.cio.EngineMain")
+}
+
+docker {
+    imageName = project.name
+    imageTag = project.version.toString()
+    buildContext = project.layout.projectDirectory.toString()
+    dockerFile = "Dockerfile"
 }
 
 configurations.all {
@@ -45,4 +53,10 @@ dependencies {
     testImplementation(kotlin("test-junit"))
     testImplementation("io.ktor:ktor-server-test-host:${libs.versions.ktor.get()}")
     testImplementation("io.ktor:ktor-client-content-negotiation:${libs.versions.ktor.get()}")
+}
+
+tasks {
+    named("dockerBuild") {
+        dependsOn(installDist)
+    }
 }

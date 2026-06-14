@@ -21,3 +21,4 @@ pluginManagement {
 }
 
 include(":docker")
+include(":migration-pg")
