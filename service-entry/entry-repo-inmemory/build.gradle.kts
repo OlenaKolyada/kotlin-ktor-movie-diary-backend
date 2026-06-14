@@ -6,16 +6,19 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(kotlin("stdlib-common"))
                 implementation(projects.entryCommon)
-                implementation(projects.entryStubs)
-                implementation(projects.entryLibCor)
+                api(projects.entryRepoCommon)
+
+                implementation(libs.coroutines.core)
+                implementation(libs.db.cache4k)
+                implementation(libs.uuid)
             }
         }
         commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation(projects.entryRepoTests)
             }
         }
         jvmMain {
@@ -26,15 +29,7 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(libs.coroutines.test)
-                implementation(projects.entryRepoTests)
             }
         }
     }
-}
-
-tasks.withType<Test>().configureEach {
-    javaLauncher.set(javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(23))
-    })
 }

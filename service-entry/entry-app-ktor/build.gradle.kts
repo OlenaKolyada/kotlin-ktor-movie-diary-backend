@@ -49,10 +49,13 @@ dependencies {
     implementation(projects.entryApiJvm)
     implementation(projects.entryApiJvmMappers)
     implementation(projects.entryStubs)
+    implementation(projects.entryRepoInmemory)
+    implementation(projects.entryRepoStubs)
 
     testImplementation(kotlin("test-junit"))
     testImplementation("io.ktor:ktor-server-test-host:${libs.versions.ktor.get()}")
     testImplementation("io.ktor:ktor-client-content-negotiation:${libs.versions.ktor.get()}")
+    testImplementation(projects.entryRepoCommon)
 }
 
 tasks {

@@ -2,6 +2,7 @@ package com.funkycorgi.vulpecula.entry.common
 
 import kotlinx.datetime.Instant
 import com.funkycorgi.vulpecula.entry.common.models.*
+import com.funkycorgi.vulpecula.entry.common.repo.IRepoEntry
 import com.funkycorgi.vulpecula.entry.common.stubs.EntryStubs
 
 data class EntryContext(
@@ -23,6 +24,12 @@ data class EntryContext(
 
     var entryValidated: Entry = Entry(),
     var entryFilterValidated: EntryFilter = EntryFilter(),
+
+    var entryRepo: IRepoEntry = IRepoEntry.NONE,
+    var entryRepoRead: Entry = Entry(),
+    var entryRepoPrepare: Entry = Entry(),
+    var entryRepoDone: Entry = Entry(),
+    var entriesRepoDone: MutableList<Entry> = mutableListOf(),
 
     var entryResponse: Entry = Entry(),
     var entriesResponse: MutableList<Entry> = mutableListOf(),
