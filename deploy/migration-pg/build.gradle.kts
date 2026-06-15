@@ -8,10 +8,12 @@ group = "com.funkycorgi.vulpecula.migration"
 version = "0.1.0"
 
 docker {
-    imageName = project.name
-    imageTag = project.version.toString()
-    buildContext = project.layout.projectDirectory.dir("src/main/liquibase/changelog").toString()
-    dockerFile = "../../docker/Dockerfile"
+    images.register("migration-pg") {
+        buildContext = project.layout.projectDirectory.toString()
+        imageName = "migration-pg"
+        imageTag = project.version.toString()
+        dockerFile = "src/main/docker/Dockerfile"
+    }
 }
 
 buildscript {
@@ -33,7 +35,7 @@ val pgContainer: ComposeContainer by lazy {
 
 tasks {
     val buildImages by creating {
-        dependsOn(dockerBuild)
+        dependsOn("dockerBuildmigrationpg")
     }
 
     val pgDn by creating {

@@ -1,9 +1,13 @@
-version: '3.9'
 services:
   psql:
     image: postgres
+    container_name: vulpecula-postgresql
+    volumes:
+      - vulpecula_postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
     environment:
       POSTGRES_PASSWORD: "vulpecula-pass"
       POSTGRES_USER: "postgres"
@@ -25,3 +29,21 @@ services:
     depends_on:
       psql:
         condition: service_healthy
+
+  entry-app-ktor:
+    image: "entry-app-ktor:0.0.1"
+    ports:
+      - "8080:8080"
+    environment:
+      DB_TYPE_PROD: postgres
+      VULPECULA_HOST: psql
+      VULPECULA_PORT: 5432
+      VULPECULA_DB: vulpecula_entries
+      VULPECULA_USER: postgres
+      VULPECULA_PASS: vulpecula-pass
+    depends_on:
+      liquibase:
+        condition: service_completed_successfully
+
+volumes:
+  vulpecula_postgres_data:

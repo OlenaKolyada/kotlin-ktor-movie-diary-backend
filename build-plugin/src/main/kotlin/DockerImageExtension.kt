@@ -1,13 +1,11 @@
 package com.funkycorgi.vulpecula.plugin
 
-open class DockerExtension {
-    var dockerFile = "Dockerfile"
-    var imageName = ""
-    var imageTag = "latest"
+class DockerImageExtension {
+    var imageName: String? = null
     var buildContext = "./"
+    var dockerFile = "Dockerfile"
+    var imageTag = "latest"
+    var dependsOnTask: String? = null
     var buildArgs: Map<String, String> = emptyMap()
     var noCache = false
-    var removeIntermediateContainers = false
-
-    val images = DockerImagesExtension()
 }
