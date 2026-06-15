@@ -1,0 +1,346 @@
+{
+  "info": {
+    "_postman_id": "b1a22d41-f5aa-40dd-a5c2-vulpecula",
+    "name": "Vulpecula Entry API",
+    "description": "Local demo collection for Vulpecula Entry API with PostgreSQL-backed requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('health is OK', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.text()).to.eql('OK');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Happy Path - Real DB",
+      "item": [
+        {
+          "name": "01 Create Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"create\",\n  \"entry\": {\n    \"movieId\": \"movie:vulpecula-defense-001\",\n    \"viewingDate\": \"2026-06-15\",\n    \"rating\": 8,\n    \"comment\": \"Created from Vulpecula defense demo\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "create"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('create succeeds', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.result).to.eql('success');",
+                  "  pm.expect(json.entry.id).to.be.a('string').and.not.empty;",
+                  "  pm.expect(json.entry.lock).to.be.a('string').and.not.empty;",
+                  "  pm.environment.set('entryId', json.entry.id);",
+                  "  pm.environment.set('entryLock', json.entry.lock);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 Read Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"read\",\n  \"entry\": {\n    \"id\": \"{{entryId}}\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "read"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('read succeeds', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.result).to.eql('success');",
+                  "  pm.expect(json.entry.id).to.eql(pm.environment.get('entryId'));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 Update Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"update\",\n  \"entry\": {\n    \"id\": \"{{entryId}}\",\n    \"movieId\": \"movie:vulpecula-defense-001\",\n    \"viewingDate\": \"2026-06-15\",\n    \"rating\": 9,\n    \"comment\": \"Updated from Vulpecula defense demo\",\n    \"lock\": \"{{entryLock}}\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "update"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('update succeeds and returns new lock', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.result).to.eql('success');",
+                  "  pm.expect(json.entry.rating).to.eql(9);",
+                  "  pm.expect(json.entry.lock).to.be.a('string').and.not.empty;",
+                  "  pm.environment.set('updatedEntryLock', json.entry.lock);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 Search Entries",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"search\",\n  \"entryFilter\": {\n    \"searchString\": \"Vulpecula defense\",\n    \"movieId\": \"movie:vulpecula-defense-001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "search"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('search succeeds', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.result).to.eql('success');",
+                  "  pm.expect(json.entries).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 Delete Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"delete\",\n  \"entry\": {\n    \"id\": \"{{entryId}}\",\n    \"lock\": \"{{updatedEntryLock}}\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/delete",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "delete"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('delete succeeds', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const json = pm.response.json();",
+                  "  pm.expect(json.result).to.eql('success');",
+                  "  pm.expect(json.entry.id).to.eql(pm.environment.get('entryId'));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Errors",
+      "item": [
+        {
+          "name": "Create - Bad Rating",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"create\",\n  \"entry\": {\n    \"movieId\": \"movie:error-rating\",\n    \"viewingDate\": \"2026-06-15\",\n    \"rating\": 11,\n    \"comment\": \"Invalid rating demo\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "create"]
+            }
+          }
+        },
+        {
+          "name": "Create - Empty MovieId",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"create\",\n  \"entry\": {\n    \"movieId\": \"\",\n    \"viewingDate\": \"2026-06-15\",\n    \"rating\": 7,\n    \"comment\": \"Invalid movie id demo\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "create"]
+            }
+          }
+        },
+        {
+          "name": "Read - Bad Id Format",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"read\",\n  \"entry\": {\n    \"id\": \"<bad>\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "read"]
+            }
+          }
+        },
+        {
+          "name": "Update - Wrong Lock",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"update\",\n  \"entry\": {\n    \"id\": \"{{entryId}}\",\n    \"movieId\": \"movie:vulpecula-defense-001\",\n    \"viewingDate\": \"2026-06-15\",\n    \"rating\": 10,\n    \"comment\": \"Wrong lock demo\",\n    \"lock\": \"wrong-lock\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/update",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "update"]
+            }
+          }
+        },
+        {
+          "name": "Search - Too Short Search String",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"search\",\n  \"entryFilter\": {\n    \"searchString\": \"ab\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entry/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["entry", "search"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
