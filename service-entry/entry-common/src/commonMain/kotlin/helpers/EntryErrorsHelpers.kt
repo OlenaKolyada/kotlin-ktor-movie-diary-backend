@@ -33,3 +33,19 @@ fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
 )
+
+fun errorSystem(
+    violationCode: String,
+    e: Throwable,
+) = EntryError(
+    code = "internal-$violationCode",
+    group = "internal",
+    field = "",
+    message = e.message ?: "System error",
+    exception = e,
+)
+
+fun EntryContext.fail(error: List<EntryError>) {
+    addError(*error.toTypedArray())
+    state = EntryState.FAILING
+}

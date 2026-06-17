@@ -11,3 +11,15 @@ ktor:
 #  urls:
 #    - "http://127.0.0.1:8080"
 #    - "http://0.0.0.0:8080"
+
+vulpecula:
+  repository:
+    test: "inmemory"
+    prod: "$DB_TYPE_PROD:inmemory"
+    psql:
+      schema: public
+      database: "$VULPECULA_DB:vulpecula_entries"
+      host: "$VULPECULA_HOST:localhost"
+      port: "$VULPECULA_PORT:5432"
+      user: "$VULPECULA_USER:postgres"
+      password: "$VULPECULA_PASS:vulpecula-pass"

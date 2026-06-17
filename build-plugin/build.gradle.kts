@@ -12,6 +12,10 @@ gradlePlugin {
             id = "build-kmp"
             implementationClass = "com.funkycorgi.vulpecula.plugin.BuildPluginMultiplatform"
         }
+        register("build-docker") {
+            id = "build-docker"
+            implementationClass = "com.funkycorgi.vulpecula.plugin.DockerPlugin"
+        }
     }
 }
 

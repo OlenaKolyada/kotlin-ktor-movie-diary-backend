@@ -3,8 +3,10 @@ package com.funkycorgi.vulpecula.entry.biz
 import com.funkycorgi.vulpecula.entry.biz.general.initStatus
 import com.funkycorgi.vulpecula.entry.biz.general.operation
 import com.funkycorgi.vulpecula.entry.biz.general.stubs
+import com.funkycorgi.vulpecula.entry.biz.repo.*
 import com.funkycorgi.vulpecula.entry.biz.stubs.*
 import com.funkycorgi.vulpecula.entry.biz.validation.*
+import com.funkycorgi.vulpecula.entry.cor.chain
 import com.funkycorgi.vulpecula.entry.cor.rootChain
 import com.funkycorgi.vulpecula.entry.cor.worker
 import com.funkycorgi.vulpecula.entry.common.EntryContext
@@ -20,6 +22,7 @@ class EntryProcessor(
 ) {
     private val businessChain = rootChain<EntryContext> {
         initStatus("Initialize status")
+        initRepo("Initialize repository")
 
         operation("Create entry", EntryCommand.CREATE) {
             stubs("Process stubs") {
@@ -43,6 +46,12 @@ class EntryProcessor(
                 validateCommentHasContent("Check comment content")
                 finishEntryValidation("Finish entry validation")
             }
+            chain {
+                title = "Create repository logic"
+                repoPrepareCreate("Prepare entry for create")
+                repoCreate("Create entry in repository")
+            }
+            prepareResult("Prepare create response")
         }
 
         operation("Read entry", EntryCommand.READ) {
@@ -59,6 +68,16 @@ class EntryProcessor(
                 validateIdProperFormat("Check id format")
                 finishEntryValidation("Finish entry validation")
             }
+            chain {
+                title = "Read repository logic"
+                repoRead("Read entry from repository")
+                worker {
+                    title = "Prepare read response"
+                    on { state == com.funkycorgi.vulpecula.entry.common.models.EntryState.RUNNING }
+                    handle { entryRepoDone = entryRepoRead }
+                }
+            }
+            prepareResult("Prepare read response")
         }
 
         operation("Update entry", EntryCommand.UPDATE) {
@@ -89,6 +108,14 @@ class EntryProcessor(
                 validateCommentHasContent("Check comment content")
                 finishEntryValidation("Finish entry validation")
             }
+            chain {
+                title = "Update repository logic"
+                repoRead("Read entry before update")
+                checkLock("Check optimistic lock consistency")
+                repoPrepareUpdate("Prepare entry for update")
+                repoUpdate("Update entry in repository")
+            }
+            prepareResult("Prepare update response")
         }
 
         operation("Delete entry", EntryCommand.DELETE) {
@@ -109,6 +136,14 @@ class EntryProcessor(
                 validateLockProperFormat("Check lock format")
                 finishEntryValidation("Finish entry validation")
             }
+            chain {
+                title = "Delete repository logic"
+                repoRead("Read entry before delete")
+                checkLock("Check optimistic lock consistency")
+                repoPrepareDelete("Prepare entry for delete")
+                repoDelete("Delete entry from repository")
+            }
+            prepareResult("Prepare delete response")
         }
 
         operation("Search entries", EntryCommand.SEARCH) {
@@ -123,6 +158,8 @@ class EntryProcessor(
                 validateSearchStringLength("Check searchString length")
                 finishEntryFilterValidation("Finish entry filter validation")
             }
+            repoSearch("Search entries in repository")
+            prepareResult("Prepare search response")
         }
     }.build()
 

@@ -27,6 +27,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation(libs.coroutines.test)
+                implementation(projects.entryRepoTests)
             }
         }
     }

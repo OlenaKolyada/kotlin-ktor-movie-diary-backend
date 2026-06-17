@@ -1,0 +1,49 @@
+services:
+  psql:
+    image: postgres
+    container_name: vulpecula-postgresql
+    volumes:
+      - vulpecula_postgres_data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_PASSWORD: "vulpecula-pass"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "vulpecula_entries"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  liquibase:
+    image: "migration-pg:0.1.0"
+    environment:
+      LIQUIBASE_COMMAND_URL: jdbc:postgresql://psql:5432/vulpecula_entries
+      LIQUIBASE_COMMAND_USERNAME: postgres
+      LIQUIBASE_COMMAND_PASSWORD: "vulpecula-pass"
+      LIQUIBASE_LIQUIBASE_SCHEMA_NAME: public
+
+    depends_on:
+      psql:
+        condition: service_healthy
+
+  entry-app-ktor:
+    image: "entry-app-ktor:0.0.1"
+    ports:
+      - "8080:8080"
+    environment:
+      DB_TYPE_PROD: postgres
+      VULPECULA_HOST: psql
+      VULPECULA_PORT: 5432
+      VULPECULA_DB: vulpecula_entries
+      VULPECULA_USER: postgres
+      VULPECULA_PASS: vulpecula-pass
+    depends_on:
+      liquibase:
+        condition: service_completed_successfully
+
+volumes:
+  vulpecula_postgres_data:
